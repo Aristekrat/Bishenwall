@@ -1,0 +1,246 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+/*****SASS VARIABLES******/ 
+
+    // Colors 
+$heading-textshadow: #fff; //#9e9e9e; 
+$heading-color: #00682B; //#228149; //#fff; //#8de2b7;
+$logo-shadow: #eee;
+$main-text-background: #6FDBA5;//#94F7BC;// //#8de2b7;
+$main-background: #EFF7F2; 
+//$header-banner: //#B7F5D6 unclear if this is even in use; 
+
+/*****RESETS******/ 
+
+@import "compass/reset";
+
+html, body, div, span, object, iframe,
+h1, h2, h3, p, blockquote, pre, del, 
+dfn, em, img, small, strong, sub, sup, 
+var, b, i, ol, ul, li, fieldset, form, 
+label, legend, table, caption, tbody, 
+tfoot, thead, tr, th, td, article, aside, 
+canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, 
+summary, time, audio, video {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+    -moz-box-sizing: border-box; 
+    -webkit-box-sizing: border-box; 
+    box-sizing: border-box;
+}
+
+body {
+    line-height:1.5;
+    background-color: $main-background; 
+}
+
+article,aside,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section {
+    display:block;
+}
+
+a {
+    margin:0;
+    padding:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+input, select {
+    vertical-align:middle;
+}
+
+/******STYLING******/ 
+
+h1, h2, h3 {
+    font-family: 'Rokkitt', serif;
+    color: $heading-color;
+    text-shadow:
+        1px 0px 0 $heading-textshadow,
+        0px 1px 0 $heading-textshadow;
+     font-size: 1.25em;
+}
+
+p, label, a {
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: $heading-color; 
+    color: rgba(68, 131, 94, 0.7); 
+}   a:hover {
+    color: darken($heading-color, 20%); 
+    color: rgba(68, 131, 94, 1);
+}
+
+/* This redundancy in placeholder selectors is sadly necessary. */ 
+::-webkit-input-placeholder {
+   font-family: 'Roboto Condensed', sans-serif;
+   letter-spacing: .06em; 
+}
+
+:-moz-placeholder { 
+   font-family: 'Roboto Condensed', sans-serif; 
+   letter-spacing: .06em; 
+}
+
+::-moz-placeholder {  
+   font-family: 'Roboto Condensed', sans-serif;
+   letter-spacing: .06em;  
+}
+
+:-ms-input-placeholder {  
+   font-family: 'Roboto Condensed', sans-serif;  
+   letter-spacing: .06em;
+}
+
+header {
+    width:100%;
+    background-color: lighten($main-text-background, 27%); //#E5FFF2; //lighten($main-text-background, 21%);//#B7F5D6;
+    height: 7.05em; 
+    box-shadow: 0 0 1px 1px rgba(0, 104, 43, 0.3); // #00682b; 
+}   .bwMainBlurb {
+        width: 36%;
+        float: left;
+        position:relative;
+        background-color: $main-text-background;
+        margin: 0;
+        padding: 0.5% 0 1% 1%;
+        border-radius: 0 0 165px 0;
+}       .bwMainBlurb {
+            display: inline-block;
+}       header ol h2 {
+            font-size: 1.5em;
+}       header ol li {
+            margin: 1.5% 0 0 7%;
+            font-size: 1.2em;
+}       header span {
+            float: left;
+            position: relative;
+            margin: 0.3% 0 0 4%;
+            width: 100%;
+}           header span button {
+             //   border-radius: 7px;
+                border-bottom: 2px solid #999; 
+                border-right: 2px solid #ccc;
+                cursor: pointer;
+                padding: 3% 5%;
+                letter-spacing: .03em;
+                background-color: #fff; //#eefbe7;
+                outline: none; 
+                font-family: 'Rokkitt', serif; 
+                font-size: 1.2em; // Need to change this to position: fixed in the future. 
+}               header span button:hover {
+                    background-image: -ms-linear-gradient(top, #FFFFFF 40%, #EEEEEE 100%);
+                    background-image: -moz-linear-gradient(top, #FFFFFF 40%, #EEEEEE 100%);
+                    background-image: -o-linear-gradient(top, #FFFFFF 40%, #EEEEEE 100%); 
+                    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(.4, #FFFFFF), color-stop(1, #EEEEEE));
+                    background-image: -webkit-linear-gradient(top, #FFFFFF 40%, #EEEEEE 100%);
+                    background-image: linear-gradient(to bottom, #FFFFFF 40%, #EEEEEE 100%); 
+}               header span button:active {
+                    border-bottom: 2px solid #777;
+                    border-right: 2px solid #777;  
+}   .bwLogo {
+        display: block;
+        position: relative;
+        top: 0.45em;
+        margin: 0 auto;
+        padding: 3%;
+        border-radius: 50%;
+        width: 6em;
+        height: 6em;
+        background: url('../images/bishenwall-logo.png') 47% 50% #FFFEDB;
+        box-shadow: inset 1px 0px 0px $logo-shadow, 
+                    inset -1px 0px 0px $logo-shadow, 
+                    inset 0px 1px 0px $logo-shadow, 
+                    inset 0px -1px 0px $logo-shadow, 
+                    0px 0px 1.5em #FFD600;
+}   .bwSuggestionsPrompt {
+        float: right;
+        margin: 2.5% 2% 0 0; 
+}
+
+//      Comment Styling
+
+#bwCommentContainer { // Change the naming convention
+        width: 100%;
+        display: block; 
+        margin: 1% 0 0 0; 
+        float: left;
+    }   .bwCommentBlock {
+        width: 80%; 
+        margin: 1% 10%;
+    }   .bwCommentBlock:after {
+            content: '';
+            width: 30em;
+            height: 15px; 
+            display: block;  
+            margin: 2.5% auto 1.5% auto; 
+            border-bottom: 1px solid #CCCCCC;
+            border-radius: 0 0 20px 20px / 0 0 1px 1px;
+        }    .bwCommentBlock h2 {
+                font-family: 'Roboto Condensed', sans-serif; 
+                letter-spacing: .03em; 
+                color: darken($main-text-background, 20%); 
+                text-shadow: 0 0 0 #fff; 
+        }   .bwCommentBlock button {
+                float: right; 
+                opacity: .5; 
+                border-radius: 4px; 
+                outline: 0; 
+                padding: 0.3% 0.7%; 
+                background: #eff7f2; 
+                cursor: pointer; 
+        }       .bwCommentBlock button:hover {
+                    opacity: 1; 
+                    background-color: #fff; 
+        }
+
+.bwPrivacyPolicy {
+    position: fixed;
+    bottom: 1%; 
+    right: 2%; 
+}
+
+form {
+    width: 50%;
+    margin: 2% 25%; 
+}   input, textarea {
+        outline: 0; 
+        width: 60%; 
+        margin: 1.5% 1% 1.5% 20%; 
+        box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
+        border: solid 1px #E5E5E5;
+}       input {
+            background-image: -ms-linear-gradient(top, #EEEEEE 0%, #FFFFFF 10%);
+            background-image: -moz-linear-gradient(top, #EEEEEE 0%, #FFFFFF 10%);
+            background-image: -o-linear-gradient(top, #EEEEEE 0%, #FFFFFF 10%); 
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #EEEEEE), color-stop(.1, #FFFFFF));
+            background-image: -webkit-linear-gradient(top, #EEEEEE 0%, #FFFFFF 10%);
+            background-image: linear-gradient(to bottom, #EEEEEE 0%, #FFFFFF 10%);
+}       textarea {
+            height: 7em; 
+            background-image: -ms-linear-gradient(top, #EEEEEE 0%, #FFFFFF 5%);
+            background-image: -moz-linear-gradient(top, #EEEEEE 0%, #FFFFFF 5%);
+            background-image: -o-linear-gradient(top, #EEEEEE 0%, #FFFFFF 5%); 
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #EEEEEE), color-stop(.05, #FFFFFF));
+            background-image: -webkit-linear-gradient(top, #EEEEEE 0%, #FFFFFF 5%);
+            background-image: linear-gradient(to bottom, #EEEEEE 0%, #FFFFFF 5%);
+}       input:focus, input:hover, textarea:focus, textarea:hover {
+            box-shadow: 0 0 1px 1px $main-text-background;
+}       .bwCommentButton {
+            padding: 1% 3%;
+            min-width: 5em;
+            margin: 1% 1% 0% 20%;
+            cursor: pointer; 
+}
