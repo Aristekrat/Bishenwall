@@ -11,13 +11,50 @@ grunt.initConfig({
             dest: 'dist/<%= pkg.name %>.js' // This will set the concatenated name to Bishenwall.js
         }
     },
+    compress: {
+        main: {
+            options: {
+              mode: 'gzip'
+            },
+            expand: true,
+            cwd: './',
+            src: ['**/*'],
+            dest: 'dist/'
+        }   // Custom extension: ext: '.gz.js'
+    },
     uglify: {
         options: {
             banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
         },
         build: {
-            src: 'app.js',
+            src: ['./*.js', './routes/*.js', './public/front-end-scripts/*.js', './config/*.js'],
             dest: 'dist/<%= pkg.name %>.min.js'
+        }
+    },
+    cssmin: {
+        minify: {
+            expand: true,
+            src: ['./public/css/screen.css'],
+            dest: 'dist/screen.min.css'
+        }
+    },
+    imagemin: {
+        dynamic: {                       
+            files: [{
+                expand: true,                  // Enable dynamic expansion
+                cwd: './public/images',        // Src matches are relative to this path
+                src: ['**/*.{png,jpg,gif}'],   // Actual patterns to match
+                dest: 'dist/'                  // Destination path prefix
+            }]
+        }
+    },
+    htmlmin: {
+        options: {                                
+            removeComments: true,
+            collapseWhitespace: true
+        },
+        files: {                                   
+            'dist/index.html': 'views/index.html'
         }
     },
     jshint: {
@@ -49,16 +86,7 @@ grunt.initConfig({
         jsLint: {
             files: ['./*.js', './routes/*.js', './public/front-end-scripts/*.js', './config/*.js'],
             tasks: ['jshint']
-        }, 
-   /*    cssLint: {
-        files: ['./public/css/*.css'],
-        tasks: ['csslint']
-      } // NOTE watch isn't really working. It's annoyingly slow. 
-    }
-   watch: { // This command will automatically run the tasks below whenever there's a change. 
-      files: ['<%= jshint.files %>'],
-      tasks: ['jshint', 'qunit']
-    } */
+        },
     }
 });
 // Build Plugins
@@ -81,12 +109,10 @@ grunt.initConfig({
         
     grunt.registerTask('jsLint', ['jshint']);
         
-    grunt.registerTask('cssLint', ['csslint']);
-        
-    grunt.registerTask('Lint', ['jshint', 'csslint']);
+    grunt.registerTask('cssLint', ['csslint']); // Linting the css file was not very useful. 
         
     grunt.registerTask('test', ['jasmine']); // You can run this set of tasks by typing "grunt test" on the command line"
         
-    grunt.registerTask('minify', ['uglify']); // You can run this set of tasks by typing "grunt test" on the command line"
+    grunt.registerTask('minify', ['compress', 'uglify', 'cssmin', 'imagemin']); // You can run this set of tasks by typing "grunt test" on the command line"
 
 };
