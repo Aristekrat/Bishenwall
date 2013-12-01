@@ -1,7 +1,7 @@
+1 - Create the html partials
 2 - Add IP checking and spam report functionality in node
-3 - Add Jasmine, create the first test
-4 - Add dummy comments once you can properly hide / call the comment form. 
-5 - Add Angular / Single page goodness. 
-        -Set up the Angular structure properly and get it to translate a variable.
-        -Set up view switching 
-6 - Figure out live reload goodness with Grunt's watch function. 
+3 - Integrate Jasmine and Karma
+4 - Add dummy comments once you can properly hide / call the comment form
+5 - Figure out live reload with Grunt's watch function. Currently it would only be useful for CSS changes, but I still want it. 
+6 - Add front-end validation to the comment form
+7 - Spawn a full minified and compressed version of BW through Grunt
