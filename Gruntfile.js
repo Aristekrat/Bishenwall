@@ -57,16 +57,6 @@ grunt.initConfig({
             'dist/index.html': 'views/index.html'
         }
     },
-    jshint: {
-        files: ['./*.js', './routes/*.js', './public/front-end-scripts/*.js', './config/*.js'],
-        options: {
-            globals: {
-                console: true,
-                module: true,
-                document: true
-            }
-        }
-    },
     csslint: {
         strict: {
             options: {
@@ -97,22 +87,12 @@ grunt.initConfig({
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-contrib-concat');
-// Test Plugins
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-csslint');
-    grunt.loadNpmTasks('grunt-contrib-jasmine'); 
 // Dev Glue
     grunt.loadNpmTasks('grunt-contrib-compass'); 
     grunt.loadNpmTasks('grunt-contrib-watch');
 /*** Tasks ***/ 
     grunt.registerTask('default', ['watch']); 
-        
-    grunt.registerTask('jsLint', ['jshint']);
-        
-    grunt.registerTask('cssLint', ['csslint']); // Linting the css file was not very useful. 
-        
-    grunt.registerTask('test', ['jasmine']); // You can run this set of tasks by typing "grunt test" on the command line"
-        
+           
     grunt.registerTask('minify', ['compress', 'uglify', 'cssmin', 'imagemin']); // You can run this set of tasks by typing "grunt test" on the command line"
 
 };

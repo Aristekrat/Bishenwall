@@ -1,5 +1,7 @@
-2 - Add IP checking and spam report functionality
+2 - Add IP checking and spam report functionality in node
 3 - Add Jasmine, create the first test
-4 - Add Grunt. Add the full suite of plugins. Just get it to minify to a build folder for now. 
+4 - Add dummy comments once you can properly hide / call the comment form. 
 5 - Add Angular / Single page goodness. 
-6 - Figure out live reload goodness with Grunt's watch funciton. 
+        -Set up the Angular structure properly and get it to translate a variable.
+        -Set up view switching 
+6 - Figure out live reload goodness with Grunt's watch function. 

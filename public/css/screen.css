@@ -69,7 +69,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   display: block;
 }
 
-/* line 28, screen.scss */
+/* line 27, screen.scss */
 html, body, div, span, object, iframe,
 h1, h2, h3, p, blockquote, pre, del,
 dfn, em, img, small, strong, sub, sup,
@@ -91,19 +91,19 @@ summary, time, audio, video {
   box-sizing: border-box;
 }
 
-/* line 41, screen.scss */
+/* line 40, screen.scss */
 body {
   line-height: 1.5;
   background-color: #eff7f2;
 }
 
-/* line 47, screen.scss */
+/* line 46, screen.scss */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
   display: block;
 }
 
-/* line 51, screen.scss */
+/* line 50, screen.scss */
 a {
   margin: 0;
   padding: 0;
@@ -112,13 +112,13 @@ a {
   background: transparent;
 }
 
-/* line 58, screen.scss */
+/* line 57, screen.scss */
 input, select {
   vertical-align: middle;
 }
 
 /******STYLING******/
-/* line 64, screen.scss */
+/* line 63, screen.scss */
 h1, h2, h3 {
   font-family: 'Rokkitt', serif;
   color: #00682b;
@@ -126,50 +126,50 @@ h1, h2, h3 {
   font-size: 1.25em;
 }
 
-/* line 73, screen.scss */
+/* line 72, screen.scss */
 p, label, a {
   font-family: 'Roboto Condensed', sans-serif;
 }
 
-/* line 77, screen.scss */
+/* line 76, screen.scss */
 a {
   text-decoration: none;
   color: #00682b;
   color: rgba(68, 131, 94, 0.7);
 }
 
-/* line 81, screen.scss */
+/* line 80, screen.scss */
 a:hover {
   color: #000201;
   color: #44835e;
 }
 
 /* This redundancy in placeholder selectors is sadly necessary. */
-/* line 87, screen.scss */
+/* line 86, screen.scss */
 ::-webkit-input-placeholder {
   font-family: 'Roboto Condensed', sans-serif;
   letter-spacing: .06em;
 }
 
-/* line 92, screen.scss */
+/* line 91, screen.scss */
 :-moz-placeholder {
   font-family: 'Roboto Condensed', sans-serif;
   letter-spacing: .06em;
 }
 
-/* line 97, screen.scss */
+/* line 96, screen.scss */
 ::-moz-placeholder {
   font-family: 'Roboto Condensed', sans-serif;
   letter-spacing: .06em;
 }
 
-/* line 102, screen.scss */
+/* line 101, screen.scss */
 :-ms-input-placeholder {
   font-family: 'Roboto Condensed', sans-serif;
   letter-spacing: .06em;
 }
 
-/* line 107, screen.scss */
+/* line 106, screen.scss */
 header {
   width: 100%;
   background-color: #ddf7ea;
@@ -177,7 +177,7 @@ header {
   box-shadow: 0 0 1px 1px rgba(0, 104, 43, 0.3);
 }
 
-/* line 112, screen.scss */
+/* line 111, screen.scss */
 .bwMainBlurb {
   width: 36%;
   float: left;
@@ -188,23 +188,23 @@ header {
   border-radius: 0 0 165px 0;
 }
 
-/* line 120, screen.scss */
+/* line 119, screen.scss */
 .bwMainBlurb {
   display: inline-block;
 }
 
-/* line 122, screen.scss */
+/* line 121, screen.scss */
 header ol h2 {
   font-size: 1.5em;
 }
 
-/* line 124, screen.scss */
+/* line 123, screen.scss */
 header ol li {
   margin: 1.5% 0 0 7%;
   font-size: 1.2em;
 }
 
-/* line 127, screen.scss */
+/* line 126, screen.scss */
 header span {
   float: left;
   position: relative;
@@ -212,7 +212,7 @@ header span {
   width: 100%;
 }
 
-/* line 132, screen.scss */
+/* line 131, screen.scss */
 header span button {
   border-bottom: 2px solid #999;
   border-right: 2px solid #ccc;
@@ -225,7 +225,7 @@ header span button {
   font-size: 1.2em;
 }
 
-/* line 143, screen.scss */
+/* line 141, screen.scss */
 header span button:hover {
   background-image: -ms-linear-gradient(top, white 40%, #eeeeee 100%);
   background-image: -moz-linear-gradient(top, white 40%, #eeeeee 100%);
@@ -235,10 +235,15 @@ header span button:hover {
   background-image: linear-gradient(to bottom, #ffffff 40%, #eeeeee 100%);
 }
 
-/* line 150, screen.scss */
+/* line 148, screen.scss */
 header span button:active {
   border-bottom: 2px solid #777;
   border-right: 2px solid #777;
+}
+
+/* line 151, screen.scss */
+header span label {
+  color: #888;
 }
 
 /* line 153, screen.scss */
@@ -247,7 +252,7 @@ header span button:active {
   position: relative;
   top: 0.45em;
   margin: 0 auto;
-  padding: 3%;
+  padding: 2.5%;
   border-radius: 50%;
   width: 6em;
   height: 6em;
@@ -319,7 +324,7 @@ header span button:active {
 }
 
 /* line 215, screen.scss */
-form {
+.bwMainForm {
   width: 50%;
   margin: 2% 25%;
 }

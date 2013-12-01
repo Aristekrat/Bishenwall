@@ -4,13 +4,10 @@
 ***/
 
 var express = require('express'), 
-    routes = require('./routes'),
     app = express(),
-    jade = require('jade'),
     mongodb = require('mongodb'),
     mongoose = require('mongoose'),
     expressValidator = require('express-validator'),
-    nodeInspector = require('node-inspector'),
     commentModel = require('./public/schemas/comments.js'),
     mongo = require('./config/mongo_config.js');
 
@@ -19,12 +16,9 @@ var express = require('express'),
 var port = process.env.PORT || 3000; 
 
 app.configure(function(){
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
   app.use(express.bodyParser());
   app.use(expressValidator());
   app.use(express.methodOverride());
-  app.use(app.router);
   app.use(express.static(__dirname + '/public'));
 });
 
@@ -38,8 +32,10 @@ app.configure('production', function(){
 
 // Routes
 
-app.get('/', routes.index);
-
+app.get('*', function(req, res) {
+    res.sendfile('./public/index.html');
+});
+ 
 // Database
 
 app.post('/', function (req, res, next) {

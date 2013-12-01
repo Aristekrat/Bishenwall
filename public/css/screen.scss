@@ -11,7 +11,6 @@ $heading-color: #00682B; //#228149; //#fff; //#8de2b7;
 $logo-shadow: #eee;
 $main-text-background: #6FDBA5;//#94F7BC;// //#8de2b7;
 $main-background: #EFF7F2; 
-//$header-banner: //#B7F5D6 unclear if this is even in use; 
 
 /*****RESETS******/ 
 
@@ -130,7 +129,6 @@ header {
             margin: 0.3% 0 0 4%;
             width: 100%;
 }           header span button {
-             //   border-radius: 7px;
                 border-bottom: 2px solid #999; 
                 border-right: 2px solid #ccc;
                 cursor: pointer;
@@ -150,12 +148,14 @@ header {
 }               header span button:active {
                     border-bottom: 2px solid #777;
                     border-right: 2px solid #777;  
+}           header span label {
+                    color: #888; 
 }   .bwLogo {
         display: block;
         position: relative;
         top: 0.45em;
         margin: 0 auto;
-        padding: 3%;
+        padding: 2.5%;
         border-radius: 50%;
         width: 6em;
         height: 6em;
@@ -172,7 +172,7 @@ header {
 
 //      Comment Styling
 
-#bwCommentContainer { // Change the naming convention
+#bwCommentContainer { 
         width: 100%;
         display: block; 
         margin: 1% 0 0 0; 
@@ -212,7 +212,7 @@ header {
     right: 2%; 
 }
 
-form {
+.bwMainForm {
     width: 50%;
     margin: 2% 25%; 
 }   input, textarea {
