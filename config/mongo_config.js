@@ -1,17 +1,13 @@
 var mongoose = require('../node_modules/mongoose'),
     db = mongoose.connection,
+//  Prod Config    
+    username = process.env.MONGO_USERNAME, 
+    password = process.env.MONGO_PASSWORD, 
+    dbURL = 'mongodb://' + username + ':' + password + '@ds053708.mongolab.com:53708/heroku_app20090225';
+/*  Local Config    
     dbURL = 'mongodb://localhost/bishenwall';
+*/
 
 mongoose.connect(dbURL);
 db.on('error', console.error.bind(console, 'connection error:'));
-module.exports = db; 
-
-/*
-The Model:
-mongodb://<dbuser>:<dbpassword>@ds053168.mongolab.com:53168/donateware
-
-The Prod Config (Inaccurate for BW):
-    username = process.env.MONGO_USERNAME, 
-    password = process.env.MONGO_PASSWORD, 
-    dbURL = 'mongodb://' + username + ':' + password + '@ds053838.mongolab.com:53838/heroku_app17845741';
-*/
+module.exports = db;
