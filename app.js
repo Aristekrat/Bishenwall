@@ -32,16 +32,24 @@ app.configure('production', function(){
 
 // Routes
 
+app.get('/getcomments', function(req, res) {
+  commentModel.find(function(err, commentModel) { 
+    if(err) { 
+      return next(err); 
+    } 
+    res.json(commentModel); 
+    });
+});
+
 app.get('*', function(req, res) {
     res.sendfile('./public/index.html');
-});
+}); // Routes are executed in the order they are defined, so the /getcomments route overrides the catch-all. 
  
 // Database
 
 app.post('/', function (req, res, next) {
   var newComment = new commentModel({
     title: req.body.comment.title,
-    name: req.body.comment.name,
     text: req.body.comment.text
   });
   req.checkBody('comment.title', 'Title required', 'comment.text', 'Comment required').notEmpty();
