@@ -1,7 +1,21 @@
-<div class="bwContentContainer" ng-repeat="comment in comments">
+<div class="bwContentContainer" ng-repeat="comment in comments | orderBy:'date':true">
     <span class="bwTextBlock">
         <h2>{{comment.title}}</h2>
         <p>{{comment.text}}</p>
-        <button>Report Spam</button>
+        <aside>{{comment.date | date:'medium'}}</aside>
+        <button id="bwSpamButton">Report Spam</button>
+        <button id="bwReplyButton" ng-click="createForm(comment)">Reply</button>
+            <form ng-show="showReplyForm(comment)" novalidate class="bwReplyForm">
+                <input type="text" ng-model="reply.replyTitle" required maxlength="100" placeholder="  Title" autofocus />
+                <input type="hidden" name="date" /> 
+                <textarea ng-model="reply.replyText" required placeholder=" Your Reply" maxlength="3000"></textarea>
+                <button id="bwSaveReply", ng-click="submitReply(comment)", type="submit">Save</button>
+                <button id="bwCancelReply" ng-click="hideReplyForm(comment)">Cancel</button>
+            </form>
+            <div ng-repeat="commentReply in comment.reply" class="bwReplyBlock">
+                <h2>{{commentReply.title}}</h2>
+                <p>{{commentReply.text}}</p>
+                <aside>{{commentReply.date | date:'medium'}}</aside>
+            </div>   
     </span>
 </div>

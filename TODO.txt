@@ -1,6 +1,11 @@
-1 - sort the comment from newest to oldest
-2 - Add IP checking and spam report functionality in node
-3 - Integrate Jasmine and Karma
-5 - Figure out live reload with Grunt's watch function. Currently it would only be useful for CSS changes, but I still want it. 
-7 - Spawn a full minified and compressed version of BW through Grunt
-8 - Change the redirect functionality for the comment.save. 
+1 - Add form checking for the reply form
+2 - Add validity checking to replies on the backend
+3 - Intelligently handle it when the user clicks save on the application
+4 - Add a success message to users after they post
+5 - Add the IP to all comments
+6 - Add sessions based on the IP
+7 - Write the Report Spam function that incs the spam count with each press
+8 - Deploy a minified version of the Bishenwall that minifies before hitting heroku
+9 - Write some Jasmine / Karma tests
+10 - Figure out live reload with Grunt's watch function. Currently it would only be useful for CSS changes, but I still want it.
+11 - Lint everything. 

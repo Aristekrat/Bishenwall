@@ -15,7 +15,26 @@ var commentSchema = new mongoose.Schema({
 	date: {
 		type: Date,
 		default: Date.now
-	}
+	},
+	spamCount: {
+		type: Number,
+		default: 0
+	}, 
+	reply: [{
+		reply: ObjectId,
+		title: {
+			type: String,
+			required: true
+		},
+		text: {
+			type: String,
+			required: true
+		},
+		date: {
+			type: Date,
+			default: Date.now
+		}, 
+	}]
 });
 
 var commentModel = mongoose.model('comment', commentSchema);
