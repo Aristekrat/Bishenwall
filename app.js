@@ -71,47 +71,6 @@ app.get('*', function(req, res) {
       req.connection.socket.remoteAddress;
       console.log(ip);
 */
-/*
-  req.checkBody('postparam', 'Invalid postparam').notEmpty().isInt();
-  req.assert('getparam', 'Invalid getparam').isInt();
-  req.assert('urlparam', 'Invalid urlparam').isAlpha();
-
-  req.sanitize('postparam').toBoolean();
-
-  var errors = req.validationErrors();
-  if (errors) {
-    res.send('There have been validation errors: ' + util.inspect(errors), 400);
-    return;
-  }
-
-    req.assert('email', 'required').notEmpty();
-    req.assert('email', 'valid email required').isEmail();
-    req.assert('password', '6 to 20 characters required').len(6, 20);
-    var errors = req.validationErrors();
-    var mappedErrors = req.validationErrors(true);
-*//*
-app.post('/', function(req,res){
-    req.assert('name', 'Name is required').notEmpty();           //Validate name
-    req.assert('email', 'A valid email is required').isEmail();  //Validate email
-
-    var errors = req.validationErrors();  
-    if( !errors){   //No errors were found.  Passed Validation!
-        res.render('index', { 
-            title: 'Form Validation Example',
-                message: 'Passed Validation!',
-                errors: {}
-        });
-       
-    }
-    else {   //Display errors to user
-        res.render('index', { 
-            title: 'Form Validation Example',
-            message: '',
-            errors: errors
-        });
-    }
- });
- */
 
 app.post('/', function (req, res) {
     req.checkBody('req.body.comment.title', 'Title Required', 'req.body.comment.text', 'Comment Required').notEmpty();
