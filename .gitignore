@@ -13,3 +13,6 @@ results
 build
 
 storage
+node_modules
+config
+dist
