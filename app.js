@@ -9,8 +9,9 @@ var express = require('express'),
     mongoose = require('mongoose'),
     expressValidator = require('express-validator'),
     commentModel = require('./public/schemas/comments.js'),
-    req = express.ServerRequest, 
-    mongo = require('./config/mongo_config.js');
+    db = mongoose.connection,
+    req = express.ServerRequest;
+//    mongo = require('./config/mongo_config.js');
 
 // Configuration
 
@@ -34,6 +35,18 @@ app.configure('production', function(){
   app.use(express.static(__dirname + '/public', { maxAge: oneDay}));
 });
 
+(function() {
+    var dbURL;
+    if(app.settings.env === "development") {
+        var dbURL = 'mongodb://localhost/bishenwall';
+    } else if(app.settings.env === "production") {
+        var username = process.env.MONGO_USERNAME, 
+            password = process.env.MONGO_PASSWORD, 
+            dbURL = 'mongodb://' + username + ':' + password + '@ds053708.mongolab.com:53708/heroku_app20090225';
+    }
+    mongoose.connect(dbURL);
+})();
+
 // Routes
 
 app.get('/getcomments', function(req, res) {
@@ -47,25 +60,80 @@ app.get('/getcomments', function(req, res) {
 
 app.get('*', function(req, res) {
     res.sendfile('./public/index.html');
+
 }); // Routes are executed in the order they are defined, so the /getcomments route overrides the catch-all. 
  
 // Database
+/* IP Checking code, requires access to the req object 
+    var ip = req.headers['x-forwarded-for'] || 
+      req.connection.remoteAddress || 
+      req.socket.remoteAddress ||
+      req.connection.socket.remoteAddress;
+      console.log(ip);
+*/
+/*
+  req.checkBody('postparam', 'Invalid postparam').notEmpty().isInt();
+  req.assert('getparam', 'Invalid getparam').isInt();
+  req.assert('urlparam', 'Invalid urlparam').isAlpha();
+
+  req.sanitize('postparam').toBoolean();
+
+  var errors = req.validationErrors();
+  if (errors) {
+    res.send('There have been validation errors: ' + util.inspect(errors), 400);
+    return;
+  }
+
+    req.assert('email', 'required').notEmpty();
+    req.assert('email', 'valid email required').isEmail();
+    req.assert('password', '6 to 20 characters required').len(6, 20);
+    var errors = req.validationErrors();
+    var mappedErrors = req.validationErrors(true);
+*//*
+app.post('/', function(req,res){
+    req.assert('name', 'Name is required').notEmpty();           //Validate name
+    req.assert('email', 'A valid email is required').isEmail();  //Validate email
+
+    var errors = req.validationErrors();  
+    if( !errors){   //No errors were found.  Passed Validation!
+        res.render('index', { 
+            title: 'Form Validation Example',
+                message: 'Passed Validation!',
+                errors: {}
+        });
+       
+    }
+    else {   //Display errors to user
+        res.render('index', { 
+            title: 'Form Validation Example',
+            message: '',
+            errors: errors
+        });
+    }
+ });
+ */
 
 app.post('/', function (req, res) {
-  var newComment = new commentModel({
-    title: req.body.comment.title,
-    text: req.body.comment.text
-  });
-  req.checkBody('comment.title', 'Title required', 'comment.text', 'Comment required').notEmpty();
-  req.sanitize('comment').xss(); 
-    newComment.save(function (err) {
-      if (err) {
-        console.log(err);
-        res.redirect('/');
-      } else { 
-        res.redirect('/');
-      }
-    });
+    req.checkBody('req.body.comment.title', 'Title Required', 'req.body.comment.text', 'Comment Required').notEmpty();
+    var errors = req.validationErrors();
+    if(!errors) {
+        var newComment = new commentModel({
+            title: req.body.comment.title,
+            text: req.body.comment.text
+        });
+        req.sanitize('newComment').xss();
+        newComment.save(function (err) {
+            if (err) {
+                console.log(err);
+                res.redirect('/');
+            } else { 
+                res.redirect('/');
+            }
+        });
+    } else {
+        console.log("Err");
+        res.redirect('/error');
+    }
 });
 
 app.post('/reply', function (req, res) {
