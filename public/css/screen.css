@@ -405,21 +405,22 @@ input:focus, input:hover, textarea:focus, textarea:hover {
 .bwReplyForm {
   width: 70%;
   margin: 5% 15% 0 15%;
+  display: inline-block;
 }
 
-/* line 267, screen.scss */
+/* line 268, screen.scss */
 .bwReplyForm input, .bwReplyForm textarea {
   width: 100%;
   margin: 1.2% 0;
 }
 
-/* line 270, screen.scss */
+/* line 271, screen.scss */
 .bwReplyForm button {
   float: left;
   margin: 0 0 0 2%;
 }
 
-/* line 274, screen.scss */
+/* line 275, screen.scss */
 .bwCommentButton {
   padding: 1% 3%;
   min-width: 5em;

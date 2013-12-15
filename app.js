@@ -11,7 +11,6 @@ var express = require('express'),
     commentModel = require('./public/schemas/comments.js'),
     db = mongoose.connection,
     req = express.ServerRequest;
-//    mongo = require('./config/mongo_config.js');
 
 // Configuration
 
@@ -64,13 +63,19 @@ app.get('*', function(req, res) {
 }); // Routes are executed in the order they are defined, so the /getcomments route overrides the catch-all. 
  
 // Database
-/* IP Checking code, requires access to the req object 
+
+function getIP(req, res) {
     var ip = req.headers['x-forwarded-for'] || 
-      req.connection.remoteAddress || 
-      req.socket.remoteAddress ||
-      req.connection.socket.remoteAddress;
-      console.log(ip);
-*/
+        req.connection.remoteAddress || 
+        req.socket.remoteAddress ||
+        req.connection.socket.remoteAddress;
+    return ip;
+}
+
+function formChecker(req, res) {
+    req.checkBody('req.body.comment.title', 'Title Required', 'req.body.comment.text', 'Comment Required').notEmpty();
+    var errors = req.validationErrors();
+}
 
 app.post('/', function (req, res) {
     req.checkBody('req.body.comment.title', 'Title Required', 'req.body.comment.text', 'Comment Required').notEmpty();

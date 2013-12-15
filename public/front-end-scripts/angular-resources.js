@@ -12,12 +12,15 @@ Bishenwall.config(function ($routeProvider, $locationProvider) {
       controller: 'commentCtrl'
     }).
     when('/privacy-policy', {
-      templateUrl: '../_privacy-policy.html',
-      controller: 'privacyCtrl'
+      templateUrl: '../_privacy-policy.html'
     }).
     when('/questions-and-suggestions', {
       templateUrl: '../_questions.html',
       controller: 'questionsCtrl'
+    }).
+    when('/error', {
+      templateUrl: '../_error.html',
+      controller: 'errorCtrl'    
     }).
     otherwise({
       redirectTo: '../_show-comments.html'
@@ -31,11 +34,9 @@ Bishenwall.controller('mainCtrl', ['$http', '$scope', function ($http, $scope) {
       $scope.comments = data;
     }).
     error(function (data, status) {
-      // Need to add proper error handling. 
+      $location.path('/error');
     });
     // This highly repetitive code ensures the reply form appears below just one comment. Currently necessary, I will need to refactor this later. 
-
-    $scope.reply = {};
     $scope.state = { selected: null };
     $scope.createForm = function(comment) {
         $scope.state.selected = comment; 
@@ -43,6 +44,7 @@ Bishenwall.controller('mainCtrl', ['$http', '$scope', function ($http, $scope) {
     $scope.showReplyForm = function(comment) {
         return $scope.state.selected === comment; 
     };
+    $scope.reply = {};
     $scope.submitReply = function(comment) {
       var replyMessage = {
         "id": comment._id,
@@ -53,10 +55,10 @@ Bishenwall.controller('mainCtrl', ['$http', '$scope', function ($http, $scope) {
         success(function( ) {
           $scope.state.selected = null; // This instantly kills the reply form but otherwise doesn't give the use useful feedback.
         }); // Need to intelligently push the new comment to user's browser. That should be right up Angular's alley.
-    }
+    };
     $scope.hideReplyForm = function(comment) {
         $scope.state.selected = null;   
-    }
+    };
 }]);
 
 Bishenwall.controller('commentCtrl', function ($scope) {
@@ -65,23 +67,6 @@ Bishenwall.controller('commentCtrl', function ($scope) {
   };
 });
 
-Bishenwall.controller('privacyCtrl', function ($scope) {
-
-});
-
 Bishenwall.controller('questionsCtrl', function ($scope) {
 
 });
-
-/*
-      for (var i = 0; i < data.length; i++) {
-        if(data[i].reply.length !== 0) {
-            var parentComment = i;
-            var replyContainer = data[i].reply;
-          }
-      }
-      $scope.replies = (data[parentComment].reply);
-      //$scope.comments[parentComment] += replyContainer; This kills the correct comment, for what this is worth.
-      console.log(parentComment); // returns the correct value.
-      //$scope.replies = replyContainer;
-*/

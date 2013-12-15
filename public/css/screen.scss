@@ -263,7 +263,8 @@ textarea {
 }
 .bwReplyForm {
     width: 70%; 
-    margin: 5% 15% 0 15%; 
+    margin: 5% 15% 0 15%;
+    display: inline-block;
 }   .bwReplyForm input, .bwReplyForm textarea {
         width: 100%; 
         margin: 1.2% 0; 

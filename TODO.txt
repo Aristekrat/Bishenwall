@@ -1,11 +1,13 @@
 1 - Add form checking for the reply form
 2 - Add validity checking to replies on the backend
-3 - Intelligently handle it when the user clicks save on the application
-4 - Add a success message to users after they post
+3 - Intelligently handle it when the user clicks save on the application:
+        .push the new comment out to the browser.
+        .notify the user in some way that they've posted successfully
 5 - Add the IP to all comments
+8 - Deploy a minified version of the Bishenwall that minifies before hitting heroku
+
 6 - Add sessions based on the IP
 7 - Write the Report Spam function that incs the spam count with each press
-8 - Deploy a minified version of the Bishenwall that minifies before hitting heroku
 9 - Write some Jasmine / Karma tests
 10 - Figure out live reload with Grunt's watch function. Currently it would only be useful for CSS changes, but I still want it.
 11 - Lint everything. 
