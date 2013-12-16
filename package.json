@@ -19,5 +19,6 @@
   },
   "devDependencies": {
     "karma": "~0.10"
-  }
+  },
+  "postinstall": "./node_modules/.bin/grunt"
 }
