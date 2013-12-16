@@ -28,7 +28,7 @@ Bishenwall.config(function ($routeProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
 });
 
-Bishenwall.controller('mainCtrl', ['$http', '$scope', function ($http, $scope) {
+Bishenwall.controller('mainCtrl', ['$http', '$scope', '$rootScope', function ($http, $scope, $rootScope) {
   $http.get('/getcomments').
     success(function (data, status) {
       $scope.comments = data;
@@ -52,9 +52,12 @@ Bishenwall.controller('mainCtrl', ['$http', '$scope', function ($http, $scope) {
         "replyText": $scope.reply.replyText
       };
       $http.post('/reply', replyMessage).
-        success(function( ) {
+        success(function ( ) {
           $scope.state.selected = null; // This instantly kills the reply form but otherwise doesn't give the use useful feedback.
-        }); // Need to intelligently push the new comment to user's browser. That should be right up Angular's alley.
+        }). // Need to intelligently push the new comment to user's browser. That should be right up Angular's alley.
+        error(function ( ) {
+            $location.path('/error');
+        });
     };
     $scope.hideReplyForm = function(comment) {
         $scope.state.selected = null;   

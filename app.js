@@ -59,10 +59,7 @@ app.get('/getcomments', function(req, res) {
 
 app.get('*', function(req, res) {
     res.sendfile('./public/index.html');
-
-}); // Routes are executed in the order they are defined, so the /getcomments route overrides the catch-all. 
- 
-// Database
+}); // Routes are executed in the order they are defined, so the /getcomments route overrides this catch-all. 
 
 function getIP(req, res) {
     var ip = req.headers['x-forwarded-for'] || 
@@ -70,11 +67,6 @@ function getIP(req, res) {
         req.socket.remoteAddress ||
         req.connection.socket.remoteAddress;
     return ip;
-}
-
-function formChecker(req, res) {
-    req.checkBody('req.body.comment.title', 'Title Required', 'req.body.comment.text', 'Comment Required').notEmpty();
-    var errors = req.validationErrors();
 }
 
 app.post('/', function (req, res) {
@@ -85,38 +77,40 @@ app.post('/', function (req, res) {
             title: req.body.comment.title,
             text: req.body.comment.text
         });
-        req.sanitize('newComment').xss();
         newComment.save(function (err) {
             if (err) {
-                console.log(err);
-                res.redirect('/');
+                res.redirect('/error');
             } else { 
                 res.redirect('/');
             }
         });
     } else {
-        console.log("Err");
         res.redirect('/error');
     }
 });
 
 app.post('/reply', function (req, res) {
-  var commentId = req.body.id;
-  var updatedComment = commentModel.findById(commentId);
-  commentModel.findByIdAndUpdate(commentId, { '$push': { 'reply': {
-    'title': req.body.replyTitle,
-    'text': req.body.replyText
-  }}}, function (err, updatedComment) {
-    if (err) {
-      console.log(err)
+    var errors = req.validationErrors(),
+        commentId = req.body.id,
+        updatedComment = commentModel.findById(commentId);
+    req.checkBody('req.body.replyTitle', 'Title Required', 'req.body.replyText', 'Comment Required').notEmpty();
+    if(!errors) {
+        commentModel.findByIdAndUpdate(commentId, { '$push': { 'reply': {
+            'title': req.body.replyTitle,
+            'text': req.body.replyText
+        }}}, function (err, updatedComment) {
+                if (err) {
+                    res.redirect('/error');
+                } else {
+                    res.json(updatedComment);
+                }
+            }
+        );
     } else {
-      //res.send(updatedComment);
-      //console.log(updatedComment); // This successfully returns the comment + it's update. So I can res.send the comment back to the application. 
-      res.redirect('/get-comments'); // TO DO: add proper applicaiton handling for this shit.
+        res.redirect('/error')
     }
-  });
 });
 
 app.listen(port, function(){
-  console.log("Express server listening on port 3000");
+    console.log("Express server listening on port 3000");
 });
