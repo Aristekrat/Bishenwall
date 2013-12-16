@@ -1,11 +1,12 @@
-3 - Intelligently handle it when the user clicks save on the application:
+1 - Modify report spam functionality.
+2 - Intelligently handle it when the user clicks save on the application:
         .push the new comment out to the browser.
         .notify the user in some way that they've posted successfully
-5 - Add the IP to all comments
-8 - Deploy a minified version of the Bishenwall that minifies before hitting heroku
-
-6 - Add sessions based on the IP
-7 - Write the Report Spam function that incs the spam count with each press
-9 - Write some Jasmine / Karma tests
-10 - Figure out live reload with Grunt's watch function. Currently it would only be useful for CSS changes, but I still want it.
-11 - Lint everything. 
+3 - Add the IP to all comments
+4 - Deploy a minified version of the Bishenwall that minifies before hitting heroku
+        .STATUS: Heroku is ignoring the post-install command. Stopping for now. 12/16/13.
+5 - Add sessions based on the IP
+6 - Write the Report Spam function that incs the spam count with each press
+7 - Increase Jasmine / Karma test coverage
+8 - Figure out live reload with Grunt's watch function. Currently it would only be useful for CSS changes, but I still want it.
+9 - Lint everything. 
