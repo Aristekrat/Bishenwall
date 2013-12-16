@@ -1,41 +1,24 @@
 module.exports = function(grunt) {
-
+/*** WARNING: Running Grunt will minify files in their current location. ***/
 grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    concat: {
-        options: {
-            separator: ';'
-        },
-        dist: {
-            src: ['src/**/*.js'], // This config concatenates all files that are in src and end in .js
-            dest: 'dist/<%= pkg.name %>.js' // This will set the concatenated name to Bishenwall.js
-        }
-    },
-    compress: {
-        main: {
-            options: {
-              mode: 'gzip'
-            },
-            expand: true,
-            cwd: './',
-            src: ['**/*'],
-            dest: 'dist/'
-        }   // Custom extension: ext: '.gz.js'
-    },
     uglify: {
         options: {
-            banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+            banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n',
+            mangle: false
         },
-        build: {
-            src: ['./*.js', './routes/*.js', './public/front-end-scripts/*.js', './config/*.js'],
-            dest: 'dist/<%= pkg.name %>.min.js'
+        my_target: {
+            files: {
+                './public/front-end-scripts/angular-resources.js' : ['./public/front-end-scripts/*.js'],
+                './app.js' : ['./app.js']
+            }
         }
     },
     cssmin: {
         minify: {
             expand: true,
             src: ['./public/css/screen.css'],
-            dest: 'dist/screen.min.css'
+            dest: '/'
         }
     },
     imagemin: {
@@ -44,40 +27,34 @@ grunt.initConfig({
                 expand: true,                  // Enable dynamic expansion
                 cwd: './public/images',        // Src matches are relative to this path
                 src: ['**/*.{png,jpg,gif}'],   // Actual patterns to match
-                dest: 'dist/'                  // Destination path prefix
+                dest: '/public/images'                  // Destination path prefix
             }]
         }
     },
     htmlmin: {
-        options: {                                
-            removeComments: true,
-            collapseWhitespace: true
-        },
-        files: {                                   
-            'dist/index.html': 'views/index.html'
-        }
-    },
-    csslint: {
-        strict: {
-            options: {
-                import: 2
+        dist: { 
+            options: {                                
+                removeComments: true,
+                collapseWhitespace: true
             },
-            src: ['./public/css/*.css']
-        }
-    },
-    compass: {
-        dist: {
-            options: {
-                config: './public/css/config.rb'
+            files: {                                   
+                'public/index.html': 'public/index.html',
+                'public/_comment-form.html': 'public/_comment-form.html',
+                'public/_show-comments.html': 'public/_show-comments.html'
             }
         }
-    },
-    watch: {
-        jsLint: {
-            files: ['./*.js', './routes/*.js', './public/front-end-scripts/*.js', './config/*.js'],
-            tasks: ['jshint']
-        },
     }
+    /*compress: {
+        main: {
+            options: {
+              mode: 'gzip'
+            },
+            expand: true,
+            cwd: './',
+            src: ['**//**'],
+            dest: 'dist/'
+        }   // Custom extension: ext: '.gz.js'
+    }  // This task may be overkill. Express should be compressing everything. If I decide to use this in the future, need to change src so it doesn't grab everything.*/
 });
 // Build Plugins
     grunt.loadNpmTasks('grunt-contrib-yuidoc');
@@ -86,13 +63,12 @@ grunt.initConfig({
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
-    grunt.loadNpmTasks('grunt-contrib-concat');
+    //grunt.loadNpmTasks('grunt-contrib-concat');
 // Dev Glue
-    grunt.loadNpmTasks('grunt-contrib-compass'); 
-    grunt.loadNpmTasks('grunt-contrib-watch');
+    //grunt.loadNpmTasks('grunt-contrib-compass'); 
+    //grunt.loadNpmTasks('grunt-contrib-watch');
 /*** Tasks ***/ 
-    grunt.registerTask('default', ['watch']); 
-           
-    grunt.registerTask('minify', ['compress', 'uglify', 'cssmin', 'imagemin']); // You can run this set of tasks by typing "grunt test" on the command line"
-
+    //grunt.registerTask('default', ['watch']); 
+    //grunt.registerTask('default', ['uglify', 'cssmin', 'imagemin', 'htmlmin']);
+    grunt.registerTask('heroku:production', ['uglify', 'cssmin', 'imagemin', 'htmlmin']);
 };
