@@ -31,7 +31,7 @@ app.configure('development', function(){
 
 app.configure('production', function(){
   app.use(express.errorHandler());
-  app.use(express.static(__dirname + '/public', { maxAge: oneDay}));
+  app.use(express.static(__dirname + '/public', { maxAge: 9874567}));
 });
 
 (function() {
