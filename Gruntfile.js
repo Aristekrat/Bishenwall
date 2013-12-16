@@ -70,5 +70,5 @@ grunt.initConfig({
 /*** Tasks ***/ 
     //grunt.registerTask('default', ['watch']); 
     //grunt.registerTask('default', ['uglify', 'cssmin', 'imagemin', 'htmlmin']);
-    grunt.registerTask('heroku:production', ['uglify', 'cssmin', 'imagemin', 'htmlmin']);
+    //grunt.registerTask('heroku:production', ['uglify', 'cssmin', 'imagemin', 'htmlmin']);
 };
