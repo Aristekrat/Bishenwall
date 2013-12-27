@@ -1,12 +1,18 @@
-1 - Modify report spam functionality.
+1 - Make one last heroic attempt to get Angular to auto-update on reply. The workaround is not ideal. 
 2 - Intelligently handle it when the user clicks save on the application:
-        .push the new comment out to the browser.
+        .rework postComment so that it works in the same mostly angular way as the reply
         .notify the user in some way that they've posted successfully
-3 - Add the IP to all comments
+3 - Refactor the submit / save comment functions to eliminate the code-uglifying redundancy.
 4 - Deploy a minified version of the Bishenwall that minifies before hitting heroku
         .STATUS: Heroku is ignoring the post-install command. Stopping for now. 12/16/13.
 5 - Add sessions based on the IP
+        .create the node sessions based on IP
+        .re-create the old session if a user clears cache
+        .change text and disable button on click
+        .figure out a way to leave the button in a changed state after page refresh for the reported comment
+        .$inc the spam counter for the repoted comment
 6 - Write the Report Spam function that incs the spam count with each press
 7 - Increase Jasmine / Karma test coverage
 8 - Figure out live reload with Grunt's watch function. Currently it would only be useful for CSS changes, but I still want it.
-9 - Lint everything. 
+9 - Lint everything.
+10 - Stop Heroku from sleeping. 

@@ -16,6 +16,9 @@ var commentSchema = new mongoose.Schema({
 		type: Date,
 		default: Date.now
 	},
+	ip: {
+		type: String
+	},
 	spamCount: {
 		type: Number,
 		default: 0
@@ -29,6 +32,9 @@ var commentSchema = new mongoose.Schema({
 		text: {
 			type: String,
 			required: true
+		},
+		ip: {
+			type: String
 		},
 		date: {
 			type: Date,

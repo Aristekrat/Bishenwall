@@ -204,7 +204,10 @@ header {
                 background: darken($main-text-background, 20%); 
                 color: #fff; 
                 padding: 0.3% 2.5%;
-                margin-right: 3%; 
+                margin-right: 3%;
+                opacity: 0.7; 
+    }           #bwReplyButton:hover, #bwReplyButton:active, .ng-valid #bwSaveReply { 
+                    opacity: 1;
     }       #bwSpamButton, #bwCancelReply {
                 opacity: .5; 
                 background: #eff7f2;
@@ -257,6 +260,7 @@ textarea {
 .bwMainForm {
     width: 50%;
     margin: 2% 25%; 
+    display: inline-block;
 }   .bwMainForm input, .bwMainForm textarea {
         width: 60%; 
         margin: 1.5% 1% 1.5% 20%; 
@@ -277,4 +281,15 @@ textarea {
     min-width: 5em;
     margin: 1% 1% 0% 20%;
     cursor: pointer; 
+}
+
+.noticeBox {
+    padding: 1% 2.5%;
+    position: absolute;
+    top: 3%;
+    right: 1.5%;
+    background-color: $main-text-background;
+    border-radius: 10px;
+}   .noticeBox h3 {
+        font-size: 1.4em;
 }

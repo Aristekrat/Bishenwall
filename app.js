@@ -17,21 +17,21 @@ var express = require('express'),
 var port = process.env.PORT || 3000; 
 
 app.configure(function(){
-  app.use(express.compress()); 
-  app.use(express.bodyParser());
-  app.use(expressValidator());
-  app.use(express.methodOverride());
-  app.use(express.static(__dirname + '/public'));
+    app.use(express.compress()); 
+    app.use(express.bodyParser());
+    app.use(expressValidator());
+    app.use(express.methodOverride());
+    app.use(express.static(__dirname + '/public'));
 });
 
 app.configure('development', function(){
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-  app.use(express.static(__dirname + '/public'));
+    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+    app.use(express.static(__dirname + '/public'));
 });
 
 app.configure('production', function(){
-  app.use(express.errorHandler());
-  app.use(express.static(__dirname + '/public', { maxAge: 9874567}));
+    app.use(express.errorHandler());
+    app.use(express.static(__dirname + '/public', { maxAge: 9874567}));
 });
 
 (function() {
@@ -49,12 +49,12 @@ app.configure('production', function(){
 // Routes
 
 app.get('/getcomments', function(req, res) {
-  commentModel.find(function(err, commentModel) { 
-    if(err) { 
-      return next(err); 
-    } 
-    res.json(commentModel); 
-    });
+    commentModel.find(function(err, commentModel) { 
+        if(err) { 
+            return next(err); 
+        } else {
+            res.json(commentModel);
+        }});
 });
 
 app.get('*', function(req, res) {
@@ -69,45 +69,44 @@ function getIP(req, res) {
     return ip;
 }
 
-app.post('/', function (req, res) {
-    req.checkBody('req.body.comment.title', 'Title Required', 'req.body.comment.text', 'Comment Required').notEmpty();
+function validator(req, res) {
     var errors = req.validationErrors();
-    if(!errors) {
-        var newComment = new commentModel({
-            title: req.body.comment.title,
-            text: req.body.comment.text
-        });
+    req.checkBody('commentTitle').notEmpty(); // A commanding majority of node-validator examples used only one line per check. Thus, I used the same method to be safe.
+    req.checkBody('commentText').notEmpty();
+    req.sanitize('commentTitle').escape();
+    req.sanitize('commentText').escape();
+    return errors; 
+}
+
+app.post('/comment', function (req, res) {
+    var errors = validator(req, res),
+        commentID = req.body.id, //This variable is only defined in a reply. Thus, I used it in the code below to test whether I'm dealing with a new comment or a reply to a comment.
+        commentIP = getIP(req, res),
+        newComment = new commentModel({
+            'title': req.body.commentTitle,
+            'text': req.body.commentText,
+            'ip': commentIP
+        });    
+    if(!errors && !commentID) {
         newComment.save(function (err) {
             if (err) {
-                res.redirect('/error');
+                res.send(err);
             } else { 
-                res.redirect('/');
-            }
-        });
-    } else {
-        res.redirect('/error');
-    }
-});
-
-app.post('/reply', function (req, res) {
-    var errors = req.validationErrors(),
-        commentId = req.body.id,
-        updatedComment = commentModel.findById(commentId);
-    req.checkBody('req.body.replyTitle', 'Title Required', 'req.body.replyText', 'Comment Required').notEmpty();
-    if(!errors) {
-        commentModel.findByIdAndUpdate(commentId, { '$push': { 'reply': {
-            'title': req.body.replyTitle,
-            'text': req.body.replyText
-        }}}, function (err, updatedComment) {
+                res.send('success');
+            }   // Refactoring this repeated code unsuccessful on first attempts. When defined elsewhere, this function throws error: 'err undefined'.
+        });     // The res.send data is currently not used by the front-end code, but available if necessary.
+    } else if(!errors && commentID) {
+        commentModel.findByIdAndUpdate(commentID, { '$push': { 'reply': newComment }
+            }, function (err) {
                 if (err) {
-                    res.redirect('/error');
+                    res.send(err);
                 } else {
-                    res.json(updatedComment);
+                    res.send('success');
                 }
             }
         );
     } else {
-        res.redirect('/error')
+        res.redirect('/error');
     }
 });
 

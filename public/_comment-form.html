@@ -1,6 +1,6 @@
-    <form novalidate name="commentForm" action="/" method="POST" class="bwMainForm">
+    <form novalidate name="commentForm" class="bwMainForm">
         <input type="text" name="comment[title]" required ng-model="comment.title" maxlength="100" placeholder="  Title" autofocus />
         <input type="hidden" name="date" /> 
         <textarea name="comment[text]" required ng-model="comment.text" placeholder=" Your Comment" maxlength="3000"></textarea>
-        <button class="bwCommentButton", type="submit", ng-disabled="!canSave()">Post</button>
+        <button class="bwCommentButton" type="submit" ng-click="postComment()" ng-disabled="!canSave()">Post</button>
     </form>
