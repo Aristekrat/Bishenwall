@@ -448,4 +448,6 @@ input:focus, input:hover, textarea:focus, textarea:hover {
 /* line 293, screen.scss */
 .noticeBox h3 {
   font-size: 1.4em;
+  color: #fff;
+  text-shadow: 1px 1px 1px #777;
 }

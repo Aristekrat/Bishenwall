@@ -14,8 +14,8 @@
                 <button id="bwCancelReply" ng-click="hideReplyForm(comment)" >Cancel</button>
             </ng-form>
             <div ng-repeat="commentReply in comment.reply" class="bwReplyBlock">
-                <h2>{{commentReply.title}}</h2>
-                <p>{{commentReply.text}}</p>
+                <h2>{{commentReply.title || commentReply.commentTitle}}</h2>
+                <p>{{commentReply.text || commentReply.commentText}}</p>
                 <aside>{{commentReply.date | date:'medium'}}</aside>
             </div>   
     </span>
