@@ -1,6 +1,6 @@
 'use strict';
 
-var Bishenwall = angular.module('Bishenwall', ['ngRoute']);
+var Bishenwall = angular.module('Bishenwall', ['ngRoute']); // This is what is causing the goddamn error in the test script.
 Bishenwall.config(function ($routeProvider, $locationProvider) {
   $routeProvider.
     when('/', {
@@ -34,14 +34,31 @@ Bishenwall.directive("notice", function() {
         link: function ($scope, $element, $attrs) {
             $scope.$on('commentPosted', function(event){
                 $scope.recentOutcome = true;
-                $scope.outcome = "Comment Posted Successfully";
+                $scope.outcome = "Comment Posted Successfully"; // Could be hardcoded, left this way for extensibility.
             });
             $scope.$on('removeNotification', function(event) {
                 $scope.recentOutcome = false;
             });
         }
-    }   // Root scope still doesn't produce the right results even though it runs through the full function.
-});
+    }
+}); // scoped within mainCtrl
+
+Bishenwall.directive("spam", ['$http', function ($http) {
+    return {
+        restrict:"A",
+        template: '{{buttonText}}',
+        scope: true,
+        link: function ($scope, $element, $attrs) {
+            $scope.buttonText = "Report Spam";
+            $scope.reportSpam = function(comment) {
+                //var commentID = { "id": comment._id };
+                $http.post('/spam', { "id": comment._id });
+                $element.addClass("bwSpamClicked");
+                $scope.buttonText = "Reported";
+            }
+        }
+    }
+}]); // scoped within mainCtrl
 
 Bishenwall.controller('mainCtrl', ['$http', '$scope', '$rootScope', '$timeout', '$location', function ($http, $scope, $rootScope, $timeout, $location) {
     $http.get('/getcomments').
@@ -86,6 +103,7 @@ Bishenwall.controller('mainCtrl', ['$http', '$scope', '$rootScope', '$timeout', 
             $location.path('/error');
         });
     };
+    $scope.text = 'Hello World!';
 }]);
 
 Bishenwall.controller('commentCtrl', ['$http', '$scope', '$rootScope', '$timeout', '$location', function ($http, $scope, $rootScope, $timeout, $location) {

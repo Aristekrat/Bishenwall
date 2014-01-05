@@ -6,8 +6,7 @@
         .change text and disable button on click
         .figure out a way to leave the button in a changed state after page refresh for the reported comment
         .$inc the spam counter for the repoted comment
-6 - Write the Report Spam function that incs the spam count with each press
 7 - Increase Jasmine / Karma test coverage
-8 - Figure out live reload with Grunt's watch function. Currently it would only be useful for CSS changes, but I still want it.
+8 - Figure out live reload with Grunt's watch function. Currently it would only be useful for CSS changes, but I still want it. // May be able to just Google Dev Tools.
 9 - Lint everything.
 10 - Stop Heroku from sleeping. 

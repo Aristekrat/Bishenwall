@@ -4,7 +4,7 @@
         <h2>{{comment.title}}</h2>
         <p>{{comment.text}}</p>
         <aside>{{comment.date | date:'medium'}}</aside>
-        <button id="bwSpamButton">Report Spam</button>
+        <button spam ng-click="reportSpam(comment)" class="bwSpamButton"></button>
         <button id="bwReplyButton" ng-click="createForm(comment)">Reply</button>
             <ng-form name="replyForm" novalidate ng-show="showReplyForm(comment)" class="bwReplyForm" >
                 <input type="text" ng-model="reply.replyTitle" required maxlength="100" placeholder="  Title" autofocus />
