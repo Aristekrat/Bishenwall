@@ -678,9 +678,10 @@ input:focus, input:hover, textarea:focus, textarea:hover {
   /* line 452, screen.scss */
   .bwTextBlock:after {
     width: 10em;
+    margin: 12% auto 0% auto;
   }
 
-  /* line 455, screen.scss */
+  /* line 456, screen.scss */
   .bwReplyBlock {
     margin-top: 25%;
   }
