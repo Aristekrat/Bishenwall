@@ -1,5 +1,7 @@
 module.exports = function(grunt) {
-/*** WARNING: Running Grunt will minify files in their current location. ***/
+/*** WARNING: Running Grunt will minify files in their current location. *
+* To-Do: change this. 
+*/
 grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
@@ -53,7 +55,7 @@ grunt.initConfig({
     watch: {
         scripts: {
             files: ['./public/js/*.js'],
-            tasks: ['concat'],
+            tasks: ['concat', 'uglify'],
             options: {
               spawn: false,
             },
@@ -70,6 +72,6 @@ grunt.initConfig({
 //  Tasks
     grunt.registerTask('default', ['watch']); 
     grunt.registerTask('minify', ['uglify', 'cssmin', 'imagemin', 'htmlmin']);
-    grunt.registerTask('concat', ['concat']);
-    grunt.registerTask('uglify', ['uglify']);
+    //grunt.registerTask('concat', ['concat']);
+    grunt.registerTask('minjs', ['uglify']);
 };
