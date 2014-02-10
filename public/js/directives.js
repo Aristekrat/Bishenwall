@@ -45,13 +45,13 @@ Bishenwall.directive("spam", ['$http', '$location', '$timeout', 'spamData', func
                         $location.path('/error');
                     });
             }
-            $timeout(function () {
+            $scope.$on('dataReady', function () {
                 for (var i = 0; i < $scope.commentData.matchedIDs.length; i++) {
                     if($scope.commentData.matchedIDs[i] === $attrs.id) {
                         $scope.setReported();
                     }
                 }
-            }, 30);
+            });
         }
     } 
 }]);

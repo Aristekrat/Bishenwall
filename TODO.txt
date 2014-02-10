@@ -2,7 +2,7 @@
         .Delete the session crap, didn't prove necessary.
 3 - Add Image upload possibility.
 5 - Add pagination.
-7 - Refactor
+
 8 - Lint everything.
 9 - Deploy a minified version of the Bishenwall that minifies before hitting heroku
         .STATUS: Heroku is ignoring the post-install command. Stopping for now. 12/16/13.
@@ -11,5 +11,6 @@
 12 - Increase Jasmine / Karma test coverage
 13 - Check the FB link once it's deployed to prod to make sure it's working correctly.
 14 - Add the custom URL.
+7 - Refactor
 15 - Make everything responsive again.
 16 - Automagically insert new content in a way that isn't disruptive

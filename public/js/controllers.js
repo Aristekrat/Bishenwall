@@ -33,6 +33,7 @@ Bishenwall.controller('mainCtrl', ['$http', '$scope', '$timeout', '$location', '
                 }
             } 
         }
+        $scope.$broadcast('dataReady')
     }, 20);
     $scope.commentData = dataWrapper;
     // Reply Form Mechanics
