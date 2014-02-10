@@ -45,13 +45,22 @@ Bishenwall.directive("spam", ['$http', '$location', '$timeout', 'spamData', func
                         $location.path('/error');
                     });
             }
-            $scope.$on('dataReady', function () {
-                for (var i = 0; i < $scope.commentData.matchedIDs.length; i++) {
-                    if($scope.commentData.matchedIDs[i] === $attrs.id) {
+            $scope.$on('dataReady', function (event, matchedIDs) {
+                for (var i = 0; i < matchedIDs.length; i++) {
+                    if(matchedIDs[i] === $attrs.id) {
                         $scope.setReported();
                     }
                 }
             });
+            /*
+                        $scope.$on('gotReportedComments', function(event, reportedCommentsOnPage) {
+                for (var i = 0; i < reportedCommentsOnPage.length; i++) {
+                    if(reportedCommentsOnPage[i] === $attrs.id) {
+                        $scope.setReported();
+                    }
+                }
+            });
+            */
         }
     } 
 }]);
