@@ -1,11 +1,13 @@
 <div notice class="noticeBox" ng-show="recentOutcome"></div>
-<div class="bwContentContainer" ng-repeat="comment in comments | orderBy:'date':true">
+<div class="bwContentContainer" ng-repeat="comment in comments">
+    
     <span class="bwTextBlock">
         <h2>{{comment.title}}</h2>
         <p>{{comment.text}}</p>
         <aside>{{comment.date | date:'medium'}}</aside>
-        <button spam ng-click="reportSpam(comment)" class="bwSpamButton"></button>
+        <button spam ng-click="reportSpam(comment)" class="bwSpamButton" id="{{comment._id}}" ng-disabled="reported"></button>
         <button id="bwReplyButton" ng-click="createForm(comment)">Reply</button>
+
             <ng-form name="replyForm" novalidate ng-show="showReplyForm(comment)" class="bwReplyForm" >
                 <input type="text" ng-model="reply.replyTitle" required maxlength="100" placeholder="  Title" autofocus />
                 <input type="hidden" name="date" /> 
@@ -13,10 +15,13 @@
                 <button id="bwSaveReply" ng-click="submitReply(comment)" ng-disabled="replyForm.$invalid || !replyForm.$dirty" type="submit">Save</button>
                 <button id="bwCancelReply" ng-click="hideReplyForm(comment)" >Cancel</button>
             </ng-form>
+            
             <div ng-repeat="commentReply in comment.reply" class="bwReplyBlock">
-                <h2>{{commentReply.title || commentReply.commentTitle}}</h2>
-                <p>{{commentReply.text || commentReply.commentText}}</p>
+                <h2>{{commentReply.title}}</h2>
+                <p>{{commentReply.text}}</p>
                 <aside>{{commentReply.date | date:'medium'}}</aside>
+                <button spam ng-click="reportSpam(commentReply)" class="bwSpamButton" id="{{commentReply._id}}" ng-disabled="reported"></button>
             </div>   
     </span>
+    
 </div>

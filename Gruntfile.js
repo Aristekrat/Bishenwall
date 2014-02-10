@@ -2,6 +2,12 @@ module.exports = function(grunt) {
 /*** WARNING: Running Grunt will minify files in their current location. ***/
 grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    concat: {
+        dist: {
+            src: ['public/js/app.js', 'public/js/services.js', 'public/js/controllers.js', 'public/js/directives.js', 'public/js/jquery.js'],
+            dest: 'public/dist/bw-scripts.js'
+        }
+    },
     uglify: {
         options: {
             banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n',
@@ -9,8 +15,8 @@ grunt.initConfig({
         },
         my_target: {
             files: {
-                './public/front-end-scripts/angular-resources.js' : ['./public/front-end-scripts/*.js'],
-                './app.js' : ['./app.js']
+                'public/dist/bw-scripts-min.js' : ['public/dist/bw-scripts.js']//,
+                //'./server.js' : ['./server.js']
             }
         }
     },
@@ -27,7 +33,7 @@ grunt.initConfig({
                 expand: true,                  // Enable dynamic expansion
                 cwd: './public/images',        // Src matches are relative to this path
                 src: ['**/*.{png,jpg,gif}'],   // Actual patterns to match
-                dest: '/public/images'                  // Destination path prefix
+                dest: '/public/images'         // Destination path prefix
             }]
         }
     },
@@ -43,31 +49,27 @@ grunt.initConfig({
                 'public/_show-comments.html': 'public/_show-comments.html'
             }
         }
-    }
-    /*compress: {
-        main: {
+    },
+    watch: {
+        scripts: {
+            files: ['./public/js/*.js'],
+            tasks: ['concat'],
             options: {
-              mode: 'gzip'
+              spawn: false,
             },
-            expand: true,
-            cwd: './',
-            src: ['**//**'],
-            dest: 'dist/'
-        }   // Custom extension: ext: '.gz.js'
-    }  // This task may be overkill. Express should be compressing everything. If I decide to use this in the future, need to change src so it doesn't grab everything.*/
+        },
+    },
 });
-// Build Plugins
-    grunt.loadNpmTasks('grunt-contrib-yuidoc');
-    grunt.loadNpmTasks('grunt-contrib-compress');
+//  Build Plugins
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
-    //grunt.loadNpmTasks('grunt-contrib-concat');
-// Dev Glue
-    //grunt.loadNpmTasks('grunt-contrib-compass'); 
-    //grunt.loadNpmTasks('grunt-contrib-watch');
-/*** Tasks ***/ 
-    //grunt.registerTask('default', ['watch']); 
-    grunt.registerTask('default', ['uglify', 'cssmin', 'imagemin', 'htmlmin']);
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+//  Tasks
+    grunt.registerTask('default', ['watch']); 
+    grunt.registerTask('minify', ['uglify', 'cssmin', 'imagemin', 'htmlmin']);
+    grunt.registerTask('concat', ['concat']);
+    grunt.registerTask('uglify', ['uglify']);
 };

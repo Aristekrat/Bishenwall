@@ -22,3 +22,4 @@ describe("HelloWorld", function() {
 })
 
 // TO-DO: Both pass, need to move on to actual testing after this. 
+// //$scope.text = 'Hello World!';  Used for testing of the test suite. Not currently necessary. Formerly in mainCtrl

@@ -14,5 +14,5 @@ build
 
 storage
 node_modules
-dist
 test
+TODO.txt
