@@ -79,7 +79,7 @@ Bishenwall.controller('mainCtrl', ['$http', '$scope', '$timeout', '$location', '
                 $scope.$broadcast('dataReady', matchedIDs);
             }
         });
-    }, 25);
+    }, 50);
 
     $scope.commentData = dataWrapper;
     // Reply Form Mechanics
