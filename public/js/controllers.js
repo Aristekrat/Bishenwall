@@ -5,36 +5,36 @@ Bishenwall.controller('mainCtrl', ['$http', '$scope', '$timeout', '$location', '
         .success(function (response) {
             $scope.comments = response;
             dataWrapper.comments = response;
+            $timeout(function () {
+                spamData.getReportedComments().then(function (response) {
+                    dataWrapper.reportedComments = response.data;
+                    if(dataWrapper.reportedComments.length > 0) {
+                        dataWrapper.pageIDs = [];
+                        var matchedIDs = [];
+                        for (var i = 0; i < dataWrapper.comments.length; i++) {
+                            dataWrapper.pageIDs.push(dataWrapper.comments[i]._id);
+                            if (dataWrapper.comments[i].reply.length > 0) {
+                                for (var e = 0; e < dataWrapper.comments[i].reply.length; e++) {
+                                    dataWrapper.pageIDs.push(dataWrapper.comments[i].reply[e]._id);
+                                }
+                            }
+                        }
+                        for (var o = 0; o < dataWrapper.reportedComments.length; o++) {
+                            for(var a = 0, idLength = dataWrapper.pageIDs.length; a < idLength; a++) {
+                                if(dataWrapper.reportedComments[o] === dataWrapper.pageIDs[a]) {
+                                    matchedIDs.push(dataWrapper.reportedComments[o]);
+                                }
+                            }
+                        }
+                    $scope.$broadcast('dataReady', matchedIDs);
+                    }
+                });
+            }, 0);
         })
         .error(function ( ) {
             $location.path('/error');
         }
     );
-    $timeout(function () {
-        spamData.getReportedComments().then(function (response) {
-            dataWrapper.reportedComments = response.data;
-            if(dataWrapper.reportedComments.length > 0) {
-                dataWrapper.pageIDs = [];
-                var matchedIDs = [];
-                for (var i = 0; i < dataWrapper.comments.length; i++) {
-                    dataWrapper.pageIDs.push(dataWrapper.comments[i]._id);
-                    if (dataWrapper.comments[i].reply.length > 0) {
-                        for (var e = 0; e < dataWrapper.comments[i].reply.length; e++) {
-                            dataWrapper.pageIDs.push(dataWrapper.comments[i].reply[e]._id);
-                        }
-                    }
-                }
-                for (var o = 0; o < dataWrapper.reportedComments.length; o++) {
-                    for(var a = 0, idLength = dataWrapper.pageIDs.length; a < idLength; a++) {
-                        if(dataWrapper.reportedComments[o] === dataWrapper.pageIDs[a]) {
-                            matchedIDs.push(dataWrapper.reportedComments[o]);
-                        }
-                    }
-                }
-                $scope.$broadcast('dataReady', matchedIDs);
-            }
-        });
-    }, 50);
 
     $scope.commentData = dataWrapper;
     // Reply Form Mechanics
