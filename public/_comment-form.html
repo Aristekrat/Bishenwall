@@ -1,6 +1,16 @@
     <form novalidate name="commentForm" class="bwMainForm">
         <input type="text" name="comment[title]" required ng-model="comment.title" maxlength="100" placeholder="  Title" autofocus />
-        <input type="hidden" name="date" /> 
         <textarea name="comment[text]" required ng-model="comment.text" placeholder=" Your Comment" maxlength="3000"></textarea>
-        <button class="bwCommentButton" type="submit" ng-click="postComment()" ng-disabled="!canSave()">Post</button>
+        <span class="bwSubmitField">
+            <button class="bwCommentButton" type="submit" ng-click="postComment()" ng-disabled="!canSave()">Post</button>
+            <!--<input type="file" onchange="angular.element(this).scope().uploadFile(this.files)" ng-model="image">
+            <!--<input name="comment[image]" onchange="angular.element(this).scope().setFiles(this)" accept="image" type="file" />-->
+            <!--<label for="comment[image]">Image (optional)</label>-->
+            <!--<button name="bwImgButton">Add Image</button>
+            <label for="bwImgButton">Optional</label> -->
+        </span>
+    </form>
+
+    <form>
+        <input type="file" onchange="angular.element(this).scope().uploadFile(this.files)" ng-model="image">
     </form>

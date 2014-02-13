@@ -1,16 +1,21 @@
-1 - Add sessions based on the IP
-        .Delete the session crap, didn't prove necessary.
+1 - Refactor
+        *Change the schema to hold references for replies rather than docs themselves
+        *Move the routes to their own seperate file.
+        *Move the schemas to the server side code.
+        *Move the utility functions to their own file
+2 - Add pagination
 3 - Add Image upload possibility.
-5 - Add pagination.
-
-8 - Lint everything.
-9 - Deploy a minified version of the Bishenwall that minifies before hitting heroku
+        *Proved far less cooperative than I was anticipating. Currently working on getting Angular to properly submit the image to the backend. 
+        Unclear if that worked, HTTP req comes through fine but the console logs a blank object.    
+4 - Add the custom URL.
+5 - Lint everything.
+6 - Deploy a minified version of the Bishenwall that minifies before hitting heroku
         .STATUS: Heroku is ignoring the post-install command. Stopping for now. 12/16/13.
-10 - Optimize Speed
-11 - Deploy Google Analytics
+7 - Optimize Speed
+8 - Deploy Google Analytics
+9 - Check the FB link once it's deployed to prod to make sure it's working correctly. 
+        *Edit: it's not >.< Possibly because Google is not crawling the site at the moment. Need to rework the meta-data. 
+10 - Make everything responsive again.
+11 - Do a manual full system test
 12 - Increase Jasmine / Karma test coverage
-13 - Check the FB link once it's deployed to prod to make sure it's working correctly.
-14 - Add the custom URL.
-7 - Refactor
-15 - Make everything responsive again.
-16 - Automagically insert new content in a way that isn't disruptive
+13 - Automagically insert new content in a way that isn't disruptive

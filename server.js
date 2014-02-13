@@ -45,6 +45,8 @@ app.configure('production', function () {
     app.use(express.static(__dirname + '/public', { maxAge: 9874567}));
 });
 
+/*** General Purpose Utility Functions ***/
+
 function getIP(req, res) {
     var ip = req.headers['x-forwarded-for'] ||
         req.connection.remoteAddress ||
@@ -53,7 +55,24 @@ function getIP(req, res) {
     return ip;
 }
 
-/*** Utility functions for Development - DELETE IN PROD ***/
+// Adds the IndexOf function to an array of objects.
+function arrayObjectIndexOf(myArray, property, searchTerm) {
+    for(var i = 0, len = myArray.length; i < len; i++) {
+        if (myArray[i][property] >= searchTerm) return i;
+    }
+    return -1;
+}
+
+function validator(req, res) {
+    var errors = req.validationErrors();
+    req.checkBody('commentTitle').notEmpty(); // A commanding majority of node-validator examples used only one line per check. Thus, I used the same method to be safe.
+    req.checkBody('commentText').notEmpty();
+    req.sanitize('commentTitle').escape();
+    req.sanitize('commentText').escape();
+    return errors; 
+}
+
+/*** Development Utility Functions ***/
 
 function blockingTest(testSize) {
     for(var i = 0; i < testSize; i++) {
@@ -70,7 +89,6 @@ function generateDummyData(model, newEntries) {
         dummyComment.save();
     }
 };
-//generateDummyData(CommentModel, 1000);
 
 // Routes
 
@@ -112,22 +130,13 @@ app.get('*', function(req, res) {
     res.sendfile('./public/index.html');
 }); // Routes are executed in the order they are defined, so the /getcomments route overrides this catch-all. 
 
-function validator(req, res) {
-    var errors = req.validationErrors();
-    req.checkBody('commentTitle').notEmpty(); // A commanding majority of node-validator examples used only one line per check. Thus, I used the same method to be safe.
-    req.checkBody('commentText').notEmpty();
-    req.sanitize('commentTitle').escape();
-    req.sanitize('commentText').escape();
-    return errors; 
-}
-
 app.post('/comment', function (req, res) {
     var errors = validator(req, res),
         commentID = req.body.id, //This variable is only necessary in a reply. Thus, I used it in the code below to test whether I'm dealing with a new comment or a reply to a comment.
         newComment = new CommentModel({
             'title': req.body.commentTitle,
             'text': req.body.commentText,
-        });    
+        });
     if(!errors && !commentID) {
         newComment.save(function (err) {
             if (err) {
@@ -151,15 +160,6 @@ app.post('/comment', function (req, res) {
         res.redirect('/error');
     }
 });
-
-//The damn object custom Indexof function 
-function arrayObjectIndexOf(myArray, property, searchTerm) {
-    for(var i = 0, len = myArray.length; i < len; i++) {
-        if (myArray[i][property] >= searchTerm) return i;
-    }
-    return -1;
-}
-//arrayObjectIndexOf(arr, "stevie", "hello"); // 1
 
 
 

@@ -19,7 +19,10 @@ var commentSchema = new mongoose.Schema({
 	spamCount: {
 		type: Number,
 		default: 0
-	}, 
+	},
+	image: {
+		type: Buffer
+	},
 	reply: [{
 		reply: ObjectId,
 		title: {
@@ -37,7 +40,10 @@ var commentSchema = new mongoose.Schema({
 		spamCount: {
 			type: Number,
 			default: 0
-		} 
+		},
+		image: {
+			type: Buffer
+		}
 	}]
 });
 

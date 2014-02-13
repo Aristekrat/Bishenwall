@@ -477,26 +477,44 @@ input:focus, input:hover, textarea:focus, textarea:hover {
   cursor: pointer;
 }
 
+/* line 310, screen.scss */
+.bwSubmitField {
+  width: 100%;
+}
+
 /* line 312, screen.scss */
+.bwSubmitField input {
+  width: 60%;
+  padding: 0.5% 0%;
+  margin-left: 10%;
+}
+
+/* line 316, screen.scss */
+.bwSubmitField label {
+  width: 30%;
+  opacity: 0.5;
+}
+
+/* line 321, screen.scss */
 .bwReplyForm {
   width: 70%;
   margin: 5% 15% 0 15%;
   display: inline-block;
 }
 
-/* line 316, screen.scss */
+/* line 325, screen.scss */
 .bwReplyForm input, .bwReplyForm textarea {
   width: 100%;
   margin: 1.2% 0;
 }
 
-/* line 319, screen.scss */
+/* line 328, screen.scss */
 .bwReplyForm button {
   float: left;
   margin: 0 0 0 2%;
 }
 
-/* line 324, screen.scss */
+/* line 333, screen.scss */
 .noticeBox {
   padding: 1% 2.5%;
   position: absolute;
@@ -506,7 +524,7 @@ input:focus, input:hover, textarea:focus, textarea:hover {
   border-radius: 10px;
 }
 
-/* line 331, screen.scss */
+/* line 340, screen.scss */
 .noticeBox h3 {
   font-size: 1.4em;
   color: #fff;
@@ -515,109 +533,109 @@ input:focus, input:hover, textarea:focus, textarea:hover {
 
 /***** Media Queries *****/
 @media screen and (min-width: 1480px) {
-  /* line 340, screen.scss */
+  /* line 349, screen.scss */
   .bwMainBlurb {
     width: 30%;
     border-radius: 0 0 165px 0;
   }
 
-  /* line 344, screen.scss */
+  /* line 353, screen.scss */
   .bwTextBlock {
     width: 45%;
     margin: 1% 27.5%;
   }
 
-  /* line 348, screen.scss */
+  /* line 357, screen.scss */
   .bwMainForm {
     width: 40%;
     margin: 2% 30%;
   }
 
-  /* line 351, screen.scss */
+  /* line 360, screen.scss */
   .bwCommentButton {
     min-width: 5em;
   }
 }
 @media screen and (max-width: 1479px) and (min-width: 1100px) {
-  /* line 357, screen.scss */
+  /* line 366, screen.scss */
   .bwMainBlurb {
     width: 40%;
     padding-bottom: 1%;
     border-radius: 0 0 135px 0;
   }
 
-  /* line 362, screen.scss */
+  /* line 371, screen.scss */
   .bwTextBlock {
     width: 45%;
     margin: 1% 27.5%;
   }
 
-  /* line 366, screen.scss */
+  /* line 375, screen.scss */
   .bwMainForm {
     width: 50%;
     margin: 2% 25%;
   }
 
-  /* line 369, screen.scss */
+  /* line 378, screen.scss */
   .bwCommentButton {
     min-width: 5em;
   }
 }
 @media screen and (max-width: 1099px) and (min-width: 700px) {
-  /* line 375, screen.scss */
+  /* line 384, screen.scss */
   .bwMainBlurb {
     width: 45%;
     padding-bottom: 1%;
     border-radius: 0 0 65px 0;
   }
 
-  /* line 380, screen.scss */
+  /* line 389, screen.scss */
   header h2 {
     font-size: 1.3em;
   }
 
-  /* line 382, screen.scss */
+  /* line 391, screen.scss */
   header ol li {
     margin: 1.5% 0 0 7%;
     font-size: 1.1em;
   }
 
-  /* line 386, screen.scss */
+  /* line 395, screen.scss */
   header span label {
     font-size: .8em;
   }
 
-  /* line 389, screen.scss */
+  /* line 398, screen.scss */
   .bwTextBlock {
     width: 75%;
     margin: 1% 12.5%;
   }
 
-  /* line 392, screen.scss */
+  /* line 401, screen.scss */
   .bwTextBlock button {
     width: 18%;
     padding: 1% 1.5%;
   }
 
-  /* line 396, screen.scss */
+  /* line 405, screen.scss */
   .bwLogo {
     background: url("../images/bishenwall-logo.png") 47% 50% transparent;
     box-shadow: 0 0 0 transparent;
   }
 
-  /* line 400, screen.scss */
+  /* line 409, screen.scss */
   .bwMainForm {
     width: 70%;
     margin: 2% 15%;
   }
 
-  /* line 403, screen.scss */
+  /* line 412, screen.scss */
   .bwCommentButton {
     min-width: 8em;
   }
 }
 @media screen and (max-width: 699px) and (min-width: 200px) {
-  /* line 409, screen.scss */
+  /* line 418, screen.scss */
   .bwMainBlurb {
     width: 100%;
     padding-bottom: 2%;
@@ -625,39 +643,39 @@ input:focus, input:hover, textarea:focus, textarea:hover {
     padding: 0;
   }
 
-  /* line 415, screen.scss */
+  /* line 424, screen.scss */
   header span {
     margin: 1% 0 2% 5%;
     width: 90%;
   }
 
-  /* line 419, screen.scss */
+  /* line 428, screen.scss */
   header h2 {
     font-size: 1.3em;
   }
 
-  /* line 422, screen.scss */
+  /* line 431, screen.scss */
   header ol li {
     margin: 1.5% 0 0 7%;
     font-size: 1.1em;
   }
 
-  /* line 426, screen.scss */
+  /* line 435, screen.scss */
   header span label {
     font-size: .95em;
   }
 
-  /* line 429, screen.scss */
+  /* line 438, screen.scss */
   header ol {
     list-style: decimal outside none;
   }
 
-  /* line 432, screen.scss */
+  /* line 441, screen.scss */
   header li {
     color: #00682b;
   }
 
-  /* line 435, screen.scss */
+  /* line 444, screen.scss */
   .bwLogo {
     top: 0.6em;
     width: 4.5em;
@@ -667,86 +685,86 @@ input:focus, input:hover, textarea:focus, textarea:hover {
     box-shadow: 0 0 0 transparent;
   }
 
-  /* line 443, screen.scss */
+  /* line 452, screen.scss */
   .bwTextBlock {
     width: 95%;
     margin: 1% 1.5%;
   }
 
-  /* line 447, screen.scss */
+  /* line 456, screen.scss */
   .bwTextBlock button {
     width: 20%;
     padding: 1% 0;
   }
 
-  /* line 451, screen.scss */
+  /* line 460, screen.scss */
   .bwPrivacyPolicy {
     float: right;
     position: relative;
     margin-top: 5%;
   }
 
-  /* line 456, screen.scss */
+  /* line 465, screen.scss */
   .bwMainForm {
     width: 90%;
     margin: 2% 5%;
   }
 
-  /* line 459, screen.scss */
+  /* line 468, screen.scss */
   .bwCommentButton {
     min-width: 9em;
     padding: 2.5% 3%;
   }
 
-  /* line 463, screen.scss */
+  /* line 472, screen.scss */
   .bwReplyForm {
     width: 90%;
     margin: 8% 5% 0 5%;
   }
 
-  /* line 466, screen.scss */
+  /* line 475, screen.scss */
   .bwReplyForm input, .bwReplyForm textarea {
     margin: 3.2% 0;
   }
 }
 @media screen and (max-width: 449px) and (min-width: 200px) {
-  /* line 472, screen.scss */
+  /* line 481, screen.scss */
   .bwLogo {
     display: none;
   }
 
-  /* line 475, screen.scss */
+  /* line 484, screen.scss */
   header ol li {
     margin: 1.5% 0 0 10%;
   }
 
-  /* line 478, screen.scss */
+  /* line 487, screen.scss */
   header span button {
     width: 78%;
     margin: 3.5% 10%;
     padding: 5% 2%;
   }
 
-  /* line 483, screen.scss */
+  /* line 492, screen.scss */
   .bwTextBlock button {
     width: 45%;
     margin-top: 5%;
     padding: 2% 0;
   }
 
-  /* line 488, screen.scss */
+  /* line 497, screen.scss */
   .bwTextBlock aside {
     display: inline-block;
     width: 80%;
   }
 
-  /* line 492, screen.scss */
+  /* line 501, screen.scss */
   .bwTextBlock:after {
     width: 10em;
     margin: 12% auto 0% auto;
   }
 
-  /* line 496, screen.scss */
+  /* line 505, screen.scss */
   .bwReplyBlock {
     margin-top: 25%;
   }

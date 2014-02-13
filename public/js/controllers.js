@@ -35,7 +35,6 @@ Bishenwall.controller('mainCtrl', ['$http', '$scope', '$timeout', '$location', '
             $location.path('/error');
         }
     );
-
     $scope.commentData = dataWrapper;
     // Reply Form Mechanics
     $scope.state = { selected: null };
@@ -69,21 +68,29 @@ Bishenwall.controller('mainCtrl', ['$http', '$scope', '$timeout', '$location', '
     };
 }]);
 
-Bishenwall.controller('commentCtrl', ['$http', '$scope', '$location', function ($http, $scope, $location) {
-  $scope.canSave = function () {
-    return $scope.commentForm.$dirty && $scope.commentForm.$valid;
-  };
-  $scope.postComment = function() {
-    var comment = {
-      "commentTitle": $scope.comment.title,
-      "commentText": $scope.comment.text
-    }
-    $http.post('/comment', comment).
-      success(function () {
-        $location.path('/');
-      }).
-      error(function ( ) {
-        $location.path('/error');
-      });
-  };
+Bishenwall.controller('commentCtrl', ['$http', '$scope', '$location', 'uploadService', function ($http, $scope, $location, uploadService) {
+    $scope.canSave = function () {
+        return $scope.commentForm.$dirty && $scope.commentForm.$valid;
+    };
+    $scope.postComment = function() {
+        var comment = {
+            "commentTitle": $scope.comment.title,
+            "commentText": $scope.comment.text,
+        };
+        $http.post('/comment', comment).
+            success(function () {
+                $location.path('/');
+            }).
+            error(function ( ) {
+                $location.path('/error');
+            });
+        };
+    $scope.uploadFile = function(files) {
+        uploadService.uploadFile(files).then(function(promise){
+            $scope.code = promise.code();
+            $scope.fileName = promise.fileName();
+        });
+    };
 }]);
+
+/* <input type="file" ng-model-instant id="fileToUpload" multiple onchange="angular.element(this).scope().setFiles(this)" /> */
