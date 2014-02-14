@@ -17,23 +17,18 @@ exports.getcomments = function (req, res) {
 
 exports.getusers = function (req, res) {
     var user = utility.getIP(req, res),
-        newUser = new UserModel({
-            'IP': user
-        }); 
-    UserModel.findOne({ "IP" : user }, (function (err, user) {
+        userQuery = { 'IP': user },
+        newUser; 
+    UserModel.findOne(userQuery, (function (err, user) {
         if (err) {
             res.send(err);
         } 
-        else if(user) {
+        else if (user) {
             res.send(user.reportedComments);
         } 
         else {
-            newUser.save(function (err) {
-            if (err) {
-                res.send(err);
-            } else {
-                res.send('success');
-            }}); // TO-DO: In need of siginficant refactoring.
+            newUser = new UserModel(userQuery);
+            newUser.save();
         }
     }));
 }
@@ -79,19 +74,19 @@ exports.reportSpam = function (req, res) {
     var commentID = req.body.id,
         userIP = utility.getIP(req, res),
         userIPQuery = { "IP" : userIP },
-        replyID = {"reply._id": commentID};
-    function updateUserSpamReport (userID, reportedComment) {
-        UserModel.findByIdAndUpdate(userID, { '$push': { 'reportedComments': reportedComment }},
-            function (err) {
-                if (err) {
-                    res.send(err);
-                } 
-                else {
-                    res.send("Accept spam report");
+        replyID = {"reply._id": commentID},
+        updateUserSpamReport = function (userID, reportedComment) {
+            UserModel.findByIdAndUpdate(userID, { '$push': { 'reportedComments': reportedComment }},
+                function (err) {
+                    if (err) {
+                        res.send(err);
+                    } 
+                    else {
+                        res.send("Accept spam report");
+                    }
                 }
-            }
-        );
-    };
+            );
+        };
     UserModel.findOne(userIPQuery, function (err, user) {
         if (user) {
             var commentPresence = user.reportedComments.indexOf(commentID),
@@ -107,7 +102,7 @@ exports.reportSpam = function (req, res) {
                         }
                     }
                 );
-                function updateUserSpamReport (id, commentID);
+                updateUserSpamReport(id, commentID);
             }
             else if (req.body.reply === true && commentPresence === -1) {
                 CommentModel.findOneAndUpdate(replyID, { '$inc': { "reply.$.spamCount": 1 }},
@@ -122,7 +117,7 @@ exports.reportSpam = function (req, res) {
                         }
                     }
                 );
-                function updateUserSpamReport (id, commentID);
+                updateUserSpamReport(id, commentID);
             }
             else {
                 res.send("Reject spam report"); 
