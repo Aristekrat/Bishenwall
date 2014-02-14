@@ -8,11 +8,10 @@ var express = require('express'),
     mongodb = require('mongodb'),
     mongoose = require('mongoose'),
     expressValidator = require('express-validator'),
-    CommentModel = require('./public/schemas/commentSchema.js'),
-    UserModel = require('./public/schemas/userSchema.js'),
     db = mongoose.connection,
     mongoStore = require('connect-mongo')(express),
     req = express.ServerRequest,
+    index = require('./server/routes.js'),
     dbURL;
 
 // Configuration
@@ -45,190 +44,14 @@ app.configure('production', function () {
     app.use(express.static(__dirname + '/public', { maxAge: 9874567}));
 });
 
-/*** General Purpose Utility Functions ***/
-
-function getIP(req, res) {
-    var ip = req.headers['x-forwarded-for'] ||
-        req.connection.remoteAddress ||
-        req.socket.remoteAddress ||
-        req.connection.socket.remoteAddress;
-    return ip;
-}
-
-// Adds the IndexOf function to an array of objects.
-function arrayObjectIndexOf(myArray, property, searchTerm) {
-    for(var i = 0, len = myArray.length; i < len; i++) {
-        if (myArray[i][property] >= searchTerm) return i;
-    }
-    return -1;
-}
-
-function validator(req, res) {
-    var errors = req.validationErrors();
-    req.checkBody('commentTitle').notEmpty(); // A commanding majority of node-validator examples used only one line per check. Thus, I used the same method to be safe.
-    req.checkBody('commentText').notEmpty();
-    req.sanitize('commentTitle').escape();
-    req.sanitize('commentText').escape();
-    return errors; 
-}
-
-/*** Development Utility Functions ***/
-
-function blockingTest(testSize) {
-    for(var i = 0; i < testSize; i++) {
-        console.log(i);
-    }
-}
-
-function generateDummyData(model, newEntries) {
-    for(var i = 1; i < newEntries; i++) {
-        var dummyComment = new model({
-            'title': i,
-            'text': i
-        });
-        dummyComment.save();
-    }
-};
-
 // Routes
 
-app.get('/getcomments', function (req, res) {
-    CommentModel.find({}, null, { limit: 50, sort: {date: -1} }, function (err, CommentModel) { 
-        if (err) {
-            res.send(err);
-        } else {
-            res.json(CommentModel);
-        }
-    });
-    // Need to write functionality that pops the next 50 when scrolled to the bottom. 
-});
+app.get('/getcomments', index.getcomments);
+app.get('/getusers', index.getusers);
+app.get('*', index.getDefault);
 
-app.get('/getusers', function (req ,res) {
-    var user = getIP(req, res),
-        newUser = new UserModel({
-            'IP': user
-        });
-    UserModel.findOne({ "IP" : user }, (function (err, user) {
-        if (err) {
-            res.send(err);
-        } 
-        else if(user) {
-            res.send(user.reportedComments);
-        } 
-        else {
-            newUser.save(function (err) {
-            if (err) {
-                res.send(err);
-            } else {
-                res.send('success');
-            }}); // TO-DO: In need of siginficant refactoring.
-        }
-    }));
-});
-
-app.get('*', function(req, res) {
-    res.sendfile('./public/index.html');
-}); // Routes are executed in the order they are defined, so the /getcomments route overrides this catch-all. 
-
-app.post('/comment', function (req, res) {
-    var errors = validator(req, res),
-        commentID = req.body.id, //This variable is only necessary in a reply. Thus, I used it in the code below to test whether I'm dealing with a new comment or a reply to a comment.
-        newComment = new CommentModel({
-            'title': req.body.commentTitle,
-            'text': req.body.commentText,
-        });
-    if(!errors && !commentID) {
-        newComment.save(function (err) {
-            if (err) {
-                res.send(err);
-            } else { 
-                res.send('success');
-            }   // The res.send data is currently not used by the front-end code, but available if necessary.
-        });
-    } else if(!errors && commentID) {
-        CommentModel.findByIdAndUpdate(commentID, { '$push': { 'reply': newComment }
-            }, function (err, doc) {
-                if (err) {
-                    res.send(err);
-                } else {
-                    var lastReply = doc.reply.pop();
-                    res.send(lastReply);
-                }
-            }
-        );
-    } else {
-        res.redirect('/error');
-    }
-});
-
-
-
-// Ugly as hell, but functional. Obviously in need of attention during the refactor stage. 
-app.post('/spam', function (req, res) {
-    var commentID = req.body.id,
-        userIP = getIP(req, res),
-        userIPQuery = { "IP" : userIP },
-        replyID = {"reply._id": commentID};
-    UserModel.findOne(userIPQuery, function (err, user) {
-        if (user) {
-            var commentPresence = user.reportedComments.indexOf(commentID),
-                id = user._id;
-            if (req.body.reply === false && commentPresence === -1) {
-                CommentModel.findByIdAndUpdate(commentID, { '$inc': { 'spamCount': 1 }}, 
-                    function (err, doc) { 
-                        if (err) {
-                            res.send(err);
-                        }
-                        else if(doc.spamCount >= 5) { // This integer sets how many spam votes get a comment removed.
-                            CommentModel.update({ _id: doc.id }, { $set: { text: 'Die, foul spam.', title: 'Spam Deleted' }}).exec();
-                            // There are not easy ways to operate on a document without first querying it. Definitely needs to be optimized. 
-                        }
-                    }
-                );
-                UserModel.findByIdAndUpdate(id, { '$push': { 'reportedComments': commentID }},  // Difficult to refactor due to the user of user id variable. Need to fix / rewrite.
-                    function (err) {
-                        if (err) {
-                            res.send(err);
-                        } 
-                        else {
-                            res.send("Accept spam report");
-                        }
-                    }
-                );
-            }
-            else if (req.body.reply === true && commentPresence === -1) {
-                CommentModel.findOneAndUpdate(replyID, { '$inc': { "reply.$.spamCount": 1 }}, 
-                    function (err, doc) {
-                        var replyIndex = arrayObjectIndexOf(doc.reply, "spamCount", 5)
-                        if (err) {
-                            res.send(err);
-                        }
-                        else if(replyIndex !== -1) {
-                            var correctReply = doc.reply[replyIndex];
-                            CommentModel.findOneAndUpdate({ "reply._id": correctReply.id }, { '$set': { "reply.$.text": 'Die, foul spam.', "reply.$.title": 'Spam Deleted' }}).exec();
-                        }
-                    }
-                );
-                UserModel.findByIdAndUpdate(id, { '$push': { 'reportedComments': commentID }}, 
-                    function (err) {
-                        if (err) {
-                            res.send(err); // Need far better responses.
-                        } 
-                        else {
-                            res.send("Accept spam report");
-                        }
-                    }
-                ); 
-            }
-            else {
-                res.send("Reject spam report"); 
-            }
-        }
-        else {
-            res.send(err);
-        }
-    });
-});
+app.post('/comment', index.addComment);
+app.post('/spam', index.reportSpam);
 
 app.listen(port, function () {
     console.log("Express server listening on port 3000");

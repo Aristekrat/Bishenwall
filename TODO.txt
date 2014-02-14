@@ -1,8 +1,3 @@
-1 - Refactor
-        *Change the schema to hold references for replies rather than docs themselves
-        *Move the routes to their own seperate file.
-        *Move the schemas to the server side code.
-        *Move the utility functions to their own file
 2 - Add pagination
 3 - Add Image upload possibility.
         *Proved far less cooperative than I was anticipating. Currently working on getting Angular to properly submit the image to the backend. 

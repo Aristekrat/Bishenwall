@@ -34,10 +34,10 @@ Bishenwall.directive("spam", ['$http', '$location', '$timeout', 'spamData', func
             *   2 - Send http post request and then set button state on front-end.
             */
             $scope.reportSpam = function(comment) {
-                var payload = { "id": comment._id }
-                if (comment.reply) payload.reply = false;
-                else payload.reply = true;
-                $http.post('/spam', payload).
+                var reportedComment = { "id": comment._id }
+                if (comment.reply) reportedComment.reply = false;
+                else reportedComment.reply = true;
+                $http.post('/spam', reportedComment).
                     success(function (data) {
                         $scope.setReported();
                     }).
@@ -45,6 +45,9 @@ Bishenwall.directive("spam", ['$http', '$location', '$timeout', 'spamData', func
                         $location.path('/error');
                     });
             }
+            /*  dataReady listener
+            *   This function takes the matchedIDs array processed in the controller and sets the reported state on the right buttons.
+            */
             $scope.$on('dataReady', function (event, matchedIDs) {
                 for (var i = 0; i < matchedIDs.length; i++) {
                     if(matchedIDs[i] === $attrs.id) {
@@ -52,15 +55,6 @@ Bishenwall.directive("spam", ['$http', '$location', '$timeout', 'spamData', func
                     }
                 }
             });
-            /*
-                        $scope.$on('gotReportedComments', function(event, reportedCommentsOnPage) {
-                for (var i = 0; i < reportedCommentsOnPage.length; i++) {
-                    if(reportedCommentsOnPage[i] === $attrs.id) {
-                        $scope.setReported();
-                    }
-                }
-            });
-            */
         }
     } 
 }]);

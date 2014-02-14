@@ -19,7 +19,7 @@ Bishenwall.factory('spamData', ['$http', function ($http) {
         }
     }
 }]);
-
+/*  This is nascent code for image upload.
 Bishenwall.service('uploadService', function($http) {   
     var code = '';
     var fileName = '';
@@ -45,4 +45,4 @@ Bishenwall.service('uploadService', function($http) {
         });
         return promise;
     };
-});
+});*/
