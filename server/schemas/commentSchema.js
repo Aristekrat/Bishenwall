@@ -23,7 +23,27 @@ var commentSchema = new Schema({
     image: {
         type: Buffer
     },
-    reply: String
+    reply: [{
+        title: {
+            type: String,
+            required: true
+        },
+        text: {
+            type: String,
+            required: true
+        },
+        date: {
+            type: Date,
+            default: Date.now
+        },
+        spamCount: {
+            type: Number,
+            default: 0
+        },
+        image: {
+            type: Buffer
+        },
+    }]
 });
 
 var commentModel = mongoose.model('comment', commentSchema);
